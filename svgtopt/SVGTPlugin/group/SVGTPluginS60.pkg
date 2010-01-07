@@ -1,0 +1,48 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description:
+;
+;
+; Installation file for MFP application
+;
+;Languages
+&EN
+;
+; UID is the app's UID
+;
+#{"SVGTPlugin"},(0x101F86DF),1,0,0,TYPE=SISOPTION
+;
+;Supports Series 60 v 1.1
+;This line indicates that this installation is for the Series 60 platform v0.9
+;This line must appear _exactly_ as shown below in the sis file
+;If this line is missing or incorrect, the sis file will not be able
+;to be installed on Series 60 v0.9 platforms
+(0x101F6F88), 0, 0, 0, {"Series60ProductID"}
+;
+; Two files to install
+;
+"\epoc32\release\thumb\urel\npSvgtPlugin.dll" -"!:\apps\plugin\npSvgtPlugin.dll"
+
+"\Epoc32\release\thumb\urel\gfx2d.dll" -"!:\system\libs\gfx2d.dll"
+
+"\Epoc32\release\thumb\urel\svgengine.dll" -"!:\system\libs\svgengine.dll"
+
+"\Epoc32\release\thumb\urel\SVGRECOG.MDL" -"!:\system\recogs\SVGRECOG.MDL"
+
+
+
+
+
+
+
