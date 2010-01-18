@@ -843,11 +843,14 @@ void CNvgEngine::ExecuteNVGCSCommandLoopL(TUint16 aCommandCount, TDereferencer *
                     {
                     idoFill = VG_TRUE;
                     }
-                TUint16 offset = aOffsetVector->DerefInt16L(lOffsetIx * sizeof(TUint16));
-
-                TDereferencer section = GetCommandSectionL(offset, aIconData, aNVGVersion);
-
-                DrawPathL(&section);
+                
+                if (idoStroke != VG_FALSE || idoFill != VG_FALSE)
+                    {
+                    TUint16 offset        = aOffsetVector->DerefInt16L(lOffsetIx * sizeof(TUint16));    
+                    TDereferencer section = GetCommandSectionL(offset, aIconData, aNVGVersion);
+    
+                    DrawPathL(&section);
+                    }
                 
                 break;
                 }

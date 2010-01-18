@@ -765,10 +765,10 @@ void CTLVRenderer::DvgClearL()
 
     if (!iScaled)
         {
-        VGfloat scaleX = iTargetWidth  / width;
-        VGfloat scaleY = iTargetHeight / height;
+        VGfloat scaleX = ((VGfloat)iTargetWidth)  / width;
+        VGfloat scaleY = ((VGfloat)iTargetHeight) / height;
         vgLoadMatrix(iUserMatrix);
-        vgTranslate(iTargetWidth / 2, iTargetHeight / 2);
+        vgTranslate(((VGfloat)iTargetWidth) / 2, ((VGfloat)iTargetHeight) / 2);
         vgScale(scaleX, scaleY);
         vgTranslate(- width / 2, - height / 2);
 
