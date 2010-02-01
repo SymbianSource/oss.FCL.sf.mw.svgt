@@ -19,7 +19,7 @@
 
 #include <eikapp.h>
 #include <aknconsts.h>
-#include <BrowserUiSDKCRKeys.h>
+#include <browseruisdkcrkeys.h>
 
 #include "VolumeKeyListener.h" 
 #include "MRepositoryVolumeObserver.h"
