@@ -265,7 +265,6 @@
     #define TEXT_UNDER_LINE  363
     #define TEXT_OVER_LINE  364
     #define TEXT_LINE_THROUGH  365
-	#define ATTRIBUTE_INHERIT  -2
 
     // These are actual sizes in 8:8 fixed point, not "choices"
     #define FONT_SIZE_XXSMALL  0x20000

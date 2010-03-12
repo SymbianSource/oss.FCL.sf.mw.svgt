@@ -609,18 +609,19 @@ TInt CSvgDocumentImpl::GetNumberOfIds(MXmlElement* aElement)
 // ==========================================================================
 TDesC* CSvgDocumentImpl::GetId(TInt index)
 {
+				TDesC* id = NULL;
         RPointerArray<TDesC> ids;
 
         FindAllIds( (CSvgElementImpl*)RootElement(), ids );
 
         if (index < ids.Count())
         {
-            return (ids[index]);
+            id = ids[index];
         }
 
         ids.Close();
 
-    return NULL;
+    return id;
 }
 
 // ==========================================================================

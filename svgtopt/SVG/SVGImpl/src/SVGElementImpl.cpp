@@ -2177,12 +2177,13 @@ TInt CSvgElementImpl::GetAttributeIntL( const TInt aNameId, TInt32& aValue )
                 {
 
                 MGfxPaint* lPaintValue = (MGfxPaint *)((( CPaintCssValueImpl* )lCssValue)->Value());
+				/*
                 if(lPaintValue && lPaintValue->GetColor()== KSvgCurrentColor)
                     {
                     lPaintValue = CurrentColor();
                     aValue = lPaintValue->GetColor();                     
                     }
-                else if(lPaintValue)
+                else*/ if(lPaintValue)
                 	{
                 	aValue = lPaintValue->GetColor();
                 	}
@@ -2309,8 +2310,9 @@ TInt CSvgElementImpl::SetAttributeIntL( const TInt aNameId,
                 }
             if( lParentElement && aValue == KInherit )    
             {
-            tParentValue  = (CIntCssValueImpl *)(lParentElement->iSvgStyleProperties->operator[](aNameId));
-            (*iSvgStyleProperties)[aNameId]= tParentValue;
+            //tParentValue  = (CIntCssValueImpl *)(lParentElement->iSvgStyleProperties->operator[](aNameId));
+            //(*iSvgStyleProperties)[aNameId]= tParentValue;
+			 tValue->SetValueL(tParentValue->Value());
             }
             else
             {
