@@ -2312,7 +2312,8 @@ TInt CSvgElementImpl::SetAttributeIntL( const TInt aNameId,
             {
             //tParentValue  = (CIntCssValueImpl *)(lParentElement->iSvgStyleProperties->operator[](aNameId));
             //(*iSvgStyleProperties)[aNameId]= tParentValue;
-			 tValue->SetValueL(tParentValue->Value());
+						if(tParentValue)
+						 		 tValue->SetValueL(tParentValue->Value());
             }
             else
             {
