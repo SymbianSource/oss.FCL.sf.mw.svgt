@@ -77,7 +77,7 @@ NONSHARABLE_CLASS( CSvgAudioElementImpl ) : public CSvgMediaElementBase,
          void  ConstructL(  const TUint8 aElemID,CSvgDocumentImpl* aDoc );
 
     public:
-        void CSvgAudioElementImpl::SetUriL( const TDesC& aUri );
+        void SetUriL( const TDesC& aUri );
 
         /**
          * Constructor for AudioElement

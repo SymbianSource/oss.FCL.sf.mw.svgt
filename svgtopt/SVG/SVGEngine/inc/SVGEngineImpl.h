@@ -822,7 +822,7 @@ class CSvgEngineImpl : public CBase, public MSVGImageLoadingObserver
 		*/                              
 		
 		void SetRenderingQuality( const TInt32 aRenderQuality);
-		void CSvgEngineImpl::ResetContext();
+		void ResetContext();
 
     private:
 

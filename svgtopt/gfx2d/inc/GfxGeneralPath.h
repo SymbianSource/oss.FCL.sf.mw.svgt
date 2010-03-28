@@ -266,8 +266,8 @@ class CGfxGeneralPath : public CBase, public MGfxShape
          RArray<TUint32>* PointTypeArray();
          unsigned char* PathSegmentTypeArray();
          void PathSegmentTypeArray(unsigned char* aSegmentTypeArray);
-         TUint8 CGfxGeneralPath::Count();
-         void CGfxGeneralPath::Count(TUint8 aCount);
+         TUint8 Count();
+         void Count(TUint8 aCount);
 
         /**
          * Get the pointer to the coordinate array.

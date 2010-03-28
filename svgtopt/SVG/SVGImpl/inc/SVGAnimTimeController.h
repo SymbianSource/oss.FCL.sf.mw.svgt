@@ -57,7 +57,7 @@ class CSvgAnimTimeController : public CBase
          * @param
          * @return
          */
-        static CSvgAnimTimeController*  CSvgAnimTimeController::NewL();
+        static CSvgAnimTimeController* NewL();
 
         /**
          * Need method description

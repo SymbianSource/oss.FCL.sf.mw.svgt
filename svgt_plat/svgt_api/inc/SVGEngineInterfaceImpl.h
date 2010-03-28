@@ -182,7 +182,7 @@ class CSvgEngineInterfaceImpl : public CBase
     {
     public:
 
-        IMPORT_C MSvgError* CSvgEngineInterfaceImpl::SaveSvgDom(TInt aHandle, const TDesC& aFileName, TInt aEngine = NULL);
+        IMPORT_C MSvgError* SaveSvgDom(TInt aHandle, const TDesC& aFileName, TInt aEngine = NULL);
 
         /**
          * Two phase construction

@@ -2590,8 +2590,7 @@ public:
      
      * changes made for Focus-in/focus-out bug(AMIA-6T8EEG)
      */
-    IMPORT_C void CSvgJavaInterfaceImpl::SvgDocumentFocusOut( SvgDocumentHandle aDocumentHandle,
-                             SvgElementHandle aElementHandle);
+    IMPORT_C void SvgDocumentFocusOut( SvgDocumentHandle aDocumentHandle, SvgElementHandle aElementHandle );
                              
 	/*
 	* Maps the PATH segment type from SVG to JSR.
