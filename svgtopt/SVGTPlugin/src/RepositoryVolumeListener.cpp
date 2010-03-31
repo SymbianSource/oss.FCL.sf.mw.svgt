@@ -23,7 +23,7 @@
 #include "RepositoryVolumeListener.h"
 //#include <SharedDataKeys.h> //include this file when KSDUidMediaVolumeControl and KMediaVolume will be needed
 //#include "epocdebug.h"
-#include <browseruisdkcrkeys.h>
+#include <BrowserUiSDKCRKeys.h>
 #include "MRepositoryVolumeObserver.h"
 
 CRepositoryVolumeListener* CRepositoryVolumeListener::NewL(MRepositoryVolumeObserver* aObserver)

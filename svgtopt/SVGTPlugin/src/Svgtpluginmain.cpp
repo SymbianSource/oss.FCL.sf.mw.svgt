@@ -20,7 +20,7 @@
 
 
 #include <implementationproxy.h>
-#include <cecombrowserplugininterface.h>
+#include <CEcomBrowserPluginInterface.h>
 /***************************************************/
 /**********ECOM STYLE SVGT PLUGIN ENTRY POINTS******/
 /***************************************************/
