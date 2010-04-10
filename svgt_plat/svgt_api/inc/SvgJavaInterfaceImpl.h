@@ -630,7 +630,7 @@ class CJavaError : public CBase, public MJavaError
 // *****************************************************************************
 /**
  * The SVG Rendering Surface functions are not used in java side.
- *
+ */
 
 // ***********************************************************************
 // SVG Document
