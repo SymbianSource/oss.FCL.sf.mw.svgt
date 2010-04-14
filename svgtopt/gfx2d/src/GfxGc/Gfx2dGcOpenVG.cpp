@@ -2874,7 +2874,7 @@ void CGfx2dGcOpenVG::SetupContextL()
 {
     // Ensure OpenVG is initialized: could have been terminated by another Svg engine
     // Returns immediately if already initialized
-         TInt err = iVgSurface->InitializeSurface( iColorBufferSize, VGI_COLORSPACE_SRGB );//NGA    --- testing purpose//srikanth
+         TInt err = iVgSurface->InitializeSurface( iColorBufferSize, VGI_COLORSPACE_SRGB );
         if (!((err == KErrNone) || (err == KErrAlreadyExists)))
             {
             #ifdef _DEBUG

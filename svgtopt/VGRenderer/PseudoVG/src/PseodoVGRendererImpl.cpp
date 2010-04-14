@@ -801,7 +801,7 @@ void CPseodoVGRendererImpl::DumpToLogFile()
     {
 #ifdef VGRENDERER_LOG
     TInt err = iLog.Connect();
-    TRAPD(logerror,iLog.CreateLog(_L("ranjithencoder"),_L("ranjithencoder.txt"),EFileLoggingModeOverwrite));
+    TRAPD(logerror,iLog.CreateLog(_L("PseodoEncoder"),_L("PseodoEncoder.txt"),EFileLoggingModeOverwrite));
 #endif    
     }
 
