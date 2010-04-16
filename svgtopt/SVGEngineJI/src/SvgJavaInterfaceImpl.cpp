@@ -1257,15 +1257,17 @@ EXPORT_C void  CSvgJavaInterfaceImpl::SvgElementSetEnumAttribute( SvgElementHand
     ********************************************************/
     if(aElementHandle)
         {
-        TInt32 lValue = 0;
+        //TInt32 lValue = 0;
+        
         TInt lSvgAttrId = SvgGetAttributeTypeMappingJSRtoSVG(aAttribute);
         if(lSvgAttrId != KSvgUnknownAttribute)
             {
-
+			TInt lValue = SvgEnumerationMappingJSRtoSVG(lSvgAttrId , (TInt)aValue);
+			/*
             lValue = SvgEnumerationMappingJSRtoSVG(lSvgAttrId , (TInt)aValue);
             
             if ( lValue == KErrNotFound && aValue == ATTRIBUTE_INHERIT ) 
-                lValue = KSVGAttributeInherit;
+                lValue = KSVGAttributeInherit;*/
             if(lSvgAttrId == KCSS_ATTR_FONTSIZE)
                 {
                 if(lValue != KErrNotFound)

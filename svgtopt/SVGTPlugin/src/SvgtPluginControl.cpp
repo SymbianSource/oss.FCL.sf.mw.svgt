@@ -527,6 +527,7 @@ void CSvgtPluginControl::UpdatePointer(
     	iXPosAtMouseDown = iPointerX;
 		iYPosAtMouseDown = iPointerY;	
     	iPlugin->iSvgModule->MouseMove( iPointerX, iPointerY );
+    	User::After(10);
         DrawNow();
     }
          }
