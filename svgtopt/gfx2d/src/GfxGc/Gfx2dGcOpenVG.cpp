@@ -2467,7 +2467,8 @@ VGImage CGfx2dGcOpenVG::CreateVGImage( void* aBuffer, TSize aSize, TDisplayMode 
     buffer = new (ELeave) TUint32[ iColorBufferSize.iWidth *   iColorBufferSize.iHeight ] ;
     
     iVgSurface->PrepareToBindClientBuffer();
-    VGImage vgImage = CreateVGImage( buffer, iColorBufferSize, EColor16MU, ETrue );
+    //VGImage vgImage = CreateVGImage( buffer, iColorBufferSize, EColor16MU, ETrue );
+    VGImage vgImage  = iVgRenderer->vgCreateImage( VG_sRGBA_8888_PRE,iColorBufferSize.iWidth, iColorBufferSize.iHeight, VG_IMAGE_QUALITY_FASTER );
     //Clear VGImage
     VGfloat color[4] = { 1.0f, 1.0f, 1.0f, 0.0f }; 
         iVgRenderer->vgSetfv(VG_CLEAR_COLOR, 4, color);
