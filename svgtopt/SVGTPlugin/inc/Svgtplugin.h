@@ -33,9 +33,9 @@
 #include "SVGListener.h"
 
 #include <npupp.h>
-#include <pluginadapterinterface.h>
+#include <PluginAdapterInterface.h>
 
-#include <cecombrowserplugininterface.h>
+#include <CEcomBrowserPluginInterface.h>
 
 #include "MRepositoryVolumeObserver.h"
 

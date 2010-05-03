@@ -1327,13 +1327,13 @@ EXPORT_C short CSvgJavaInterfaceImpl::SvgElementGetEnumAttribute( SvgElementHand
                 {
                 if(lSvgAttrId == KCSS_ATTR_FONTSIZE)
                     {
-                    if(lValue != KErrNotFound)
-                        {
+                   // if(lValue != KErrNotFound)
+                    //    {
                         // font is internally considered to be a float.
                         TReal32 lValue = GetElementFloatAttribute((CSvgElementImpl*)aElementHandle,lSvgAttrId);
                         return short (lValue) ;
-                        }
-                    return KInvalidEnumAttribute;
+                    //    }
+                    //return KInvalidEnumAttribute;
                     }
                 TInt lResult = GetEnumAttribute((CSvgElementImpl*)aElementHandle, lSvgAttrId , lValue);
                 if(lResult == KErrNotFound)
@@ -2653,36 +2653,42 @@ TInt  CSvgJavaInterfaceImpl::SvgEnumerationtoStringMappingJSRtoSVG(const TInt aA
 */
 TInt CSvgJavaInterfaceImpl::SvgStringtoEnumerationMappingSVGtoJSR(const TInt aAttributeId , TPtrC16 aValue)
 {
+    TInt attribVal = KErrNotFound;
+    
     switch(aAttributeId)
     {
     case KCSS_ATTR_FILLRULE:
             {
             if(aValue == _L("evenodd"))
-            return FILL_RULE_EVENODD;
-            if(aValue == _L("nonzero"))
-            return FILL_RULE_NONZERO;
+                attribVal = FILL_RULE_EVENODD;
+            else if(aValue == _L("nonzero"))
+                attribVal = FILL_RULE_NONZERO;
             }
+            break;
     case KCSS_ATTR_STROKE_LINECAP:
             {
             if(aValue == _L("butt"))
-            return STROKE_LINECAP_BUTT;
-            if(aValue == _L("round"))
-            return STROKE_LINECAP_ROUND;
-            if(aValue == _L("square"))
-            return STROKE_LINECAP_SQUARE;
+                attribVal = STROKE_LINECAP_BUTT;
+            else if(aValue == _L("round"))
+                attribVal = STROKE_LINECAP_ROUND;
+            else if(aValue == _L("square"))
+                attribVal = STROKE_LINECAP_SQUARE;
             }
-
-        case KCSS_ATTR_STROKE_LINEJOIN:
-
+            break;
+    case KCSS_ATTR_STROKE_LINEJOIN:
             {
             if(aValue == _L("miter"))
-            return STROKE_LINEJOIN_MITER;
-            if(aValue == _L("round"))
-            return STROKE_LINEJOIN_ROUND;
-            if(aValue == _L("bevel"))
-            return STROKE_LINEJOIN_BEVEL;
+                attribVal = STROKE_LINEJOIN_MITER;
+            else if(aValue == _L("round"))
+                attribVal = STROKE_LINEJOIN_ROUND;
+            else if(aValue == _L("bevel"))
+                attribVal = STROKE_LINEJOIN_BEVEL;
             }
-        default: return KErrNotFound;
+            break;
+    default: 
+        attribVal = KErrNotFound;
+    
+    return attribVal;
     }
 }
 /**

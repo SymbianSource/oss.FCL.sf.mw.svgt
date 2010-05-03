@@ -679,11 +679,13 @@ TInt CSvgAnimationBase::SetAttributeL( const TDesC& aName, const TDesC& aValue )
 				        iAnimTime->SaveBeginTime();
             }
 
-            if ( ( ((CSvgDocumentImpl*)iOwnerDocument)->Engine() && iAnimTime && ((CSvgDocumentImpl*)iOwnerDocument)->Engine()->CurrentTIme() >= iAnimTime->BeginTime() )
-             || ( iAnimTime && ((CSvgDocumentImpl*)iOwnerDocument)->iTimeForJSR226 >= iAnimTime->BeginTime() ) )
+            if ( ( ((CSvgDocumentImpl*)iOwnerDocument)->Engine() && ((CSvgDocumentImpl*)iOwnerDocument)->Engine()->CurrentTIme() >= iAnimTime->BeginTime() )
+             || ( ((CSvgDocumentImpl*)iOwnerDocument)->iTimeForJSR226 >= iAnimTime->BeginTime() ) )
 				{
-        	iTargetElement->SetIsAnimating( ETrue );
-        	SetIsAnimating( ETrue );
+                if (iTargetElement)
+                    iTargetElement->SetIsAnimating( ETrue );
+                
+                SetIsAnimating( ETrue );
 				}
 
         }

@@ -28,8 +28,8 @@
 #include "SVGAttributeVerifier.h"
 #include "SVGErrorImpl.h"
 
-#include "mxmlattributes.h"
-#include "mxmlcontenthandler.h"
+#include "MXMLAttributes.h"
+#include "MXMLContentHandler.h"
 
 #include "SVGSchemaData.h"
 #include "SVGDocumentImpl.h"

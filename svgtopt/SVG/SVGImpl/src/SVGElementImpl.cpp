@@ -101,8 +101,6 @@ TBool CSvgElementImpl::StyleInParent(CSvgElementImpl* aElement, TInt aAttrIndex)
 			   CSvgElementImpl* lParentElement = (CSvgElementImpl*)aElement->ParentNode ();
 			   while(lParentElement && (lParentElement->iSvgStyleProperties != NULL))
 			   {
-			   		if(!lParentElement)
-			   			return EFalse;
 			      if (aElement->iSvgStyleProperties->operator[](aAttrIndex) ==
 			          lParentElement->iSvgStyleProperties->operator[](aAttrIndex))
 			      {
@@ -673,7 +671,8 @@ TBool CSvgElementImpl::SetPropertyL( const TInt& aAttrId,
                 {
                 ((CSvgFontFaceElementImpl *)this)->SetFontFamilyL(aValue);
                 }
-
+				break;
+				
         case KCSS_ATTR_STROKE_LINECAP:
         case KCSS_ATTR_STROKE_LINEJOIN:
         case KCSS_ATTR_FILLRULE:

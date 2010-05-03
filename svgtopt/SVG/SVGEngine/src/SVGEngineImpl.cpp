@@ -1406,7 +1406,7 @@ void CSvgEngineImpl::StartEngine(CSvgErrorImpl* aError)
     // Document is an animation
     if( iSvgDocument->IsAnimationFile() )
         {
-            { // Mahesh: Atleast first frame should get drawn
+            { // Atleast first frame should get drawn
                 TRAPD(error, RedrawL() );
                 {
                     if ( error != KErrNone && aError != NULL )

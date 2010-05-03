@@ -374,11 +374,7 @@ MXmlElement* CSvgDocumentImpl::CreateElementL(const TUint8 aTagName )
             // ellipse
             return ( MXmlElement * ) CSvgEllipseElementImpl::NewL( (TUint8) position, this );
 
-        case KSvgDefsElement:
-			// defs
-        	return ( MXmlElement * ) CSvgDefsElementImpl::NewL((TUint8) position, this);
-
-		case KSvgForeignObjectElement:
+       case KSvgForeignObjectElement:
 			// foreignObject
     		return ( MXmlElement * ) CSvgForeignObjectElementImpl::NewL((TUint8) position, this);
 
