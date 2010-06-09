@@ -104,7 +104,7 @@ TInt CSWVGSurfaceImpl::CopyBitmap(TInt aDisplayMode,TInt aMaskMode,CFbsBitmap *a
         ret = ::VGISymbianCopyToBitmap(aBitmap, aMask, VGI_COPY_TRANSPARENT_PIXELS);
         }
         
-    return KErrNone;
+    return ret;
     }
 
 TInt CSWVGSurfaceImpl::PrepareToBindClientBuffer()

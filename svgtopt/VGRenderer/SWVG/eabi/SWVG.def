@@ -6,4 +6,6 @@ EXPORTS
 	_ZTV15COpenVGRenderer @ 5 NONAME ; #<VT>#
 	_ZTV16CSWVGSurfaceImpl @ 6 NONAME ; #<VT>#
 	_ZTV21CSWOpenVGRendererImpl @ 7 NONAME ; #<VT>#
+	_ZTI22CSWVGTargetSurfaceImpl @ 8 NONAME
+	_ZTV22CSWVGTargetSurfaceImpl @ 9 NONAME
 

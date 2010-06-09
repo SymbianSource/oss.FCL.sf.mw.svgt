@@ -59,6 +59,7 @@
 #include "SVGTimeContainer.h"
 #include "SVGMediaAnimationElementImpl.h"
 
+#include <svgtbitmap.h>
 // Constants
 // length of </text>
 const TInt KClosingTextTagLength = 7;
@@ -748,9 +749,24 @@ void CSvgEngineImpl::RedrawL()
 
         // Get the redering result onto CFbsBitmap.
         if(iFrameBufferSize.iWidth > 0)
-            iGfxContext->UpdateFramebufferL( iFrameBuffer, iMask,iFrameBufferSize,iRenderDspMode,iMaskDspMode );    
+            {
+            if(iIsTargetRenderingEnabled) 
+                { // M2G
+                iGfxContext->UpdateFramebufferL( iTargetBitmapBuffer, iTargetMaskBuffer,iFrameBufferSize,
+                        iTargetBitmapBuffer->DisplayMode(),iTargetMaskBuffer->DisplayMode());
+                }
+            else 
+                iGfxContext->UpdateFramebufferL( iFrameBuffer, iMask,iFrameBufferSize,iRenderDspMode,
+                        iMaskDspMode );
+            }
         else
-         iGfxContext->UpdateFramebufferL( iFrameBuffer, iMask );
+            {
+            if(iIsTargetRenderingEnabled)  //M2G
+                iGfxContext->UpdateFramebufferL( iTargetBitmapBuffer, iTargetMaskBuffer );
+            else
+                iGfxContext->UpdateFramebufferL( iFrameBuffer, iMask );
+
+            }
 
         if ( !iIgnoreUpdateScreen && iRequestObserver != NULL )
             {
@@ -1259,6 +1275,13 @@ void CSvgEngineImpl::GenerateMask(CFbsBitmap* aMask)
         }
     }
 
+void CSvgEngineImpl::GenerateMask(CSvgtBitmap* aMask)
+    {
+    if ( iGfxContext )
+        {
+        iGfxContext->GenerateMask( aMask );
+        }
+    }
 //
 // ---------------------------------------------------------------------------
 // set background color
@@ -1372,7 +1395,38 @@ void CSvgEngineImpl::SetGdiContextL(CFbsBitmap* aCurrentBitmap, CFbsBitmap* aMas
         iGfxContext->ChangeBufferSizeL( TSize( 0,0 ) );
         }
     }
+//----------------------------------------------------------------------------------------------
+//M2G: SetGdiContextL() is overloaded to accept CSvgtBitmap to enable rendering on target buffer.
+//-----------------------------------------------------------------------------------------------
+void CSvgEngineImpl::SetGdiContextL(CSvgtBitmap* aCurrentBitmap, CSvgtBitmap* aMask)
+    {
 
+    // Handle for both Non-NULL and NULL parameter
+    iTargetBitmapBuffer = aCurrentBitmap;
+    iTargetMaskBuffer = aMask;
+
+    if ( aCurrentBitmap )
+        {
+        if ( !iGfxContext )
+            {
+                iGfxContext = CGfx2dGcOpenVG::NewL( iTargetBitmapBuffer->SizeInPixels(), iBitmapFontSpec, iSvgBitmapFontProvider, EFalse );
+                
+                // The API is called Only in case of JSR226. Incase if the midlet developer
+                // has changed the RedenderQuality of the midlet.ByDefualt the value of 
+                // iRenderQuality is 2 i.e. VG_RENDERING_QUALITY_BETTER.
+                iGfxContext->SetAntialiasingMode( iRenderQuality );
+            }
+        else
+            {
+            iGfxContext->ChangeBufferSizeL( iTargetBitmapBuffer->SizeInPixels() );
+            }
+        }
+    else if ( iGfxContext )
+        {
+        iGfxContext->ChangeBufferSizeL( TSize( 0,0 ) );
+        }
+        
+    }
 // ---------------------------------------------------------------------------
 // void CSvgEngineImpl::StartEngine(CSvgErrorImpl* aError)
 // ---------------------------------------------------------------------------
@@ -1460,12 +1514,24 @@ void CSvgEngineImpl::StartEngine(CSvgErrorImpl* aError)
 // ---------------------------------------------------------------------------
 void CSvgEngineImpl::RenderFrame( TUint aCurrentTime )
     {
-    if ( !iFrameBuffer || !iSvgDocument ||
-         iFrameBuffer->SizeInPixels().iWidth == 0 || iFrameBuffer->SizeInPixels().iHeight == 0 )
+    if(iIsTargetRenderingEnabled) //M2G: If target rendering is enabled
         {
-        return;
+        if ( !iTargetBitmapBuffer || !iSvgDocument ||
+              iTargetBitmapBuffer->SizeInPixels().iWidth == 0 || 
+              iTargetBitmapBuffer->SizeInPixels().iHeight == 0 )
+            {
+            return;
+            }
         }
-
+    else
+        {
+        if (!iFrameBuffer || !iSvgDocument
+            || iFrameBuffer->SizeInPixels().iWidth == 0
+            || iFrameBuffer->SizeInPixels().iHeight == 0)
+            {
+            return;
+            }
+        }
     if ( aCurrentTime == 0 )
         {
         SeekEngine( 0 );
@@ -3152,6 +3218,21 @@ void CSvgEngineImpl::SetBitmapHeader(const TDesC* aHeaderData)
         {
         ((CGfx2dGcOpenVG *)iGfxContext)->SetBitmapHeader(aHeaderData);
         }
+    }
+//---------------------------------------------------------------
+// M2G: Enable rendering on target buffer.
+//----------------------------------------------------------------
+void CSvgEngineImpl::EnableTargetRendering(TBool aTargetRendering )
+    {
+    iIsTargetRenderingEnabled = aTargetRendering; 
+    }
+
+//---------------------------------------------------------------
+// M2G: TBool CSvgEngineImpl::IsTargetRenderingEnabled() const 
+//----------------------------------------------------------------
+TBool CSvgEngineImpl::IsTargetRenderingEnabled() const 
+    {
+    return iIsTargetRenderingEnabled; 
     }
 //NGA
 // ---------------------------------------------------------------------------
