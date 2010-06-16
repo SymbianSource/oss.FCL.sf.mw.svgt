@@ -18,7 +18,7 @@
 
 #include <platform_paths.hrh>
 
-ALWAYS_BUILD_AS_ARM
+// ALWAYS_BUILD_AS_ARM
 /* Srini: Raptor automatically adds --cpu 5te when building for rvct4.0
                            and adds --cpu 5t when building with rvct 2.2.
                            basically the option is redundant. please don't add the option.
@@ -34,7 +34,7 @@ VENDORID      VID_DEFAULT
 UID 0x1000008D 0x101F856E
 
 
-	#if defined( ARMCC )
+	#if defined( EABI )
 	deffile ../eabi/SVGENGINE-OpenVG.def
 	#elif defined( WINSCW )
 	deffile ../BWINSCW/SVGENGINE-OpenVG.def
