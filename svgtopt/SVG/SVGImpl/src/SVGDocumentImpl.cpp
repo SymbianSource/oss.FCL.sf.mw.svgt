@@ -77,7 +77,7 @@
 #include "SVGTimeContainer.h"
 #include <ezgzip.h>
 
-#include <caf/caf.h>
+//#include <caf/caf.h>
 #include <bautils.h>
 
 // ==========================================================================
