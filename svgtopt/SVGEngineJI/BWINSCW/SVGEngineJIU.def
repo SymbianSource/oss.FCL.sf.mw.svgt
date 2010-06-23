@@ -87,4 +87,5 @@ EXPORTS
 	?SvgRenderingSurfaceGetHeight@CSvgJavaInterfaceImpl@@QAEHH@Z @ 86 NONAME ; int CSvgJavaInterfaceImpl::SvgRenderingSurfaceGetHeight(int)
 	?SvgRenderingSurfaceGetWidth@CSvgJavaInterfaceImpl@@QAEHH@Z @ 87 NONAME ; int CSvgJavaInterfaceImpl::SvgRenderingSurfaceGetWidth(int)
 	?NewL@CSvgJavaInterfaceImpl@@SAPAV1@AAVTFontSpec@@@Z @ 88 NONAME ; class CSvgJavaInterfaceImpl * CSvgJavaInterfaceImpl::NewL(class TFontSpec &)
+	?SvgEngineRenderDocument@CSvgJavaInterfaceImpl@@QAEXHHIIM@Z @ 89 NONAME ; void CSvgJavaInterfaceImpl::SvgEngineRenderDocument(int, int, unsigned int, unsigned int, float)
 

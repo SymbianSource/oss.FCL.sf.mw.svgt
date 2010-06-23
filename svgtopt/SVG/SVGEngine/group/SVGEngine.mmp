@@ -62,6 +62,7 @@ SOURCE SVGErrorImpl.cpp
 SOURCE Svgdecoder.cpp
 SOURCE SVGFourPointRect.cpp
 
+
 SOURCEPATH ../../SVGImpl/src
 
 SOURCE SVGElementImpl.cpp

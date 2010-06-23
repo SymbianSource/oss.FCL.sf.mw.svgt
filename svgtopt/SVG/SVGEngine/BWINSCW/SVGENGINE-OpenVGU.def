@@ -191,4 +191,6 @@ EXPORTS
 	?ResetContext@CSvgEngineInterfaceImpl@@QAEXH@Z @ 190 NONAME ; void CSvgEngineInterfaceImpl::ResetContext(int)
 	?ConstructL@CSvgEngineInterfaceImpl@@IAEXAAVTFontSpec@@@Z @ 191 NONAME ; void CSvgEngineInterfaceImpl::ConstructL(class TFontSpec &)
 	?TLVEncodedData@CSvgEngineInterfaceImpl@@QBE?BVTPtrC8@@XZ @ 192 NONAME ; class TPtrC8 const CSvgEngineInterfaceImpl::TLVEncodedData(void) const
+	?GenerateMask@CSvgEngineInterfaceImpl@@QAEXPAVCSvgtBitmap@@H@Z @ 193 NONAME ; void CSvgEngineInterfaceImpl::GenerateMask(class CSvgtBitmap *, int)
+	?SetGdiContextL@CSvgEngineInterfaceImpl@@QAEXPAVCSvgEngineImpl@@PAVCSvgtBitmap@@@Z @ 194 NONAME ; void CSvgEngineInterfaceImpl::SetGdiContextL(class CSvgEngineImpl *, class CSvgtBitmap *)
 

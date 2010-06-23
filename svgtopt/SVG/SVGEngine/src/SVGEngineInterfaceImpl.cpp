@@ -1499,6 +1499,13 @@ EXPORT_C void CSvgEngineInterfaceImpl::GenerateMask(CFbsBitmap* aMask, TInt aEng
         }
     }
 
+EXPORT_C void CSvgEngineInterfaceImpl::GenerateMask(CSvgtBitmap* aMask, TInt aEngine )
+    {
+        if ( ChooseEngine( aEngine ) )
+        {
+            iSvgEngine->GenerateMask(aMask);
+        }
+    }
 
 // --------------------------------------------------------------------------
 // EXPORT_C void CSvgEngineInterfaceImpl::SetBackgroundColor(TUint32 aRGBA8888Color, CSvgEngineImpl* aEngine)
@@ -2465,6 +2472,19 @@ EXPORT_C void CSvgEngineInterfaceImpl::SetGdiContextL( CSvgEngineImpl* aEngine, 
         aEngine->SetGdiContextL( aFrameBuffer );
         }
 }
+
+// --------------------------------------------------------------------------
+//  M2G: Overloaded SetGdiContextL() for CSvgtBitmap to enable rendering on target buffer.
+// ---------------------------------------------------------------------------
+EXPORT_C void CSvgEngineInterfaceImpl::SetGdiContextL( CSvgEngineImpl* aEngine, CSvgtBitmap* aFrameBuffer )
+    {
+    if( aEngine )
+        {
+        aEngine->EnableTargetRendering(ETrue);
+        aEngine->SetGdiContextL( aFrameBuffer );
+        }
+    }
+
 // --------------------------------------------------------------------------
 // EXPORT_C void CSvgEngineInterfaceImpl::SetDocument( CSvgEngineImpl* aEngine, CSvgDocumentImpl* aDocument )
 // ---------------------------------------------------------------------------
