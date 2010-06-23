@@ -26,7 +26,7 @@
 
 #include "SVGUseElementImpl.h"
 #include "SVGAnimationElementImpl.h"
-#include "rxmlreader.h"
+#include <xml/rxmlreader.h>
 
 #include "SVGPaintCssValueImpl.h"
 #include "SVGPathElementImpl.h"
