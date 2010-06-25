@@ -31,7 +31,7 @@ VENDORID        VID_DEFAULT
 // Defined for audio support
 
 //deffile generation
-#if defined( ARMCC )
+#if defined( EABI )
 deffile ../eabi/npSvgtPlugin.DEF
 #else
 deffile ../BWINSCW/NPSVGTPLUGIN.DEF
