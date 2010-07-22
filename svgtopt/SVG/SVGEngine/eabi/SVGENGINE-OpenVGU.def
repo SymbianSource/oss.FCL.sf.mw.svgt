@@ -388,4 +388,6 @@ EXPORTS
 	_ZN23CSvgEngineInterfaceImpl5StartERP9MSvgErrorPK6TDesC8P14CSvgEngineImpl @ 387 NONAME
 	_ZN23CSvgEngineInterfaceImpl6UseDomEiP10CFbsBitmapS1_5TSize12TDisplayModeS3_i @ 388 NONAME
 	_ZNK23CSvgEngineInterfaceImpl14TLVEncodedDataEv @ 389 NONAME
+	_ZN23CSvgEngineInterfaceImpl12GenerateMaskEP11CSvgtBitmapi @ 390 NONAME
+	_ZN23CSvgEngineInterfaceImpl14SetGdiContextLEP14CSvgEngineImplP11CSvgtBitmap @ 391 NONAME
 

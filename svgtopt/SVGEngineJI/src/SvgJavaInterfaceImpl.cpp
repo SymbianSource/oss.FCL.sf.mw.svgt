@@ -241,6 +241,34 @@ EXPORT_C void CSvgJavaInterfaceImpl::SvgEngineRenderDocument( SvgEngineHandle aE
 	*/
 }
 
+/*
+ * M2G: SvgEngineRenderDocument() overloaded to pass the CSvgtBitmap object to SvgEngine
+ */
+EXPORT_C void CSvgJavaInterfaceImpl::SvgEngineRenderDocument( 
+    SvgEngineHandle aEngineHandle, SvgDocumentHandle aDocumentHandle, 
+    SvgtBitmapHandle aSurfaceHandle, SvgtBitmapHandle aSurfaceMaskHandle, 
+    TReal32 aCurrentTime ) 
+    {
+    CSvgEngineInterfaceImpl::iFileIsLoaded = ETrue;
+
+    SetDocument( (CSvgEngineImpl*)aEngineHandle, (CSvgDocumentImpl*)aDocumentHandle );
+
+    // GfxContext creation
+    TRAPD(error, SetGdiContextL( (CSvgEngineImpl*)aEngineHandle, (CSvgtBitmap*)aSurfaceHandle ) );
+    if ( error != KErrNone )
+       {
+       // ignore trap error
+       }
+
+    //this udpates things like Viewport with whatever preserveAspectRatio and widths are set
+    //InitializeEngine((CSvgEngineImpl*)aEngineHandle);
+
+    if ( ((CSvgtBitmap*)aSurfaceMaskHandle) != NULL)
+    GenerateMask((CSvgtBitmap*)aSurfaceMaskHandle);
+
+    RenderFrame( (CSvgEngineImpl*)aEngineHandle, (TUint)(aCurrentTime * 1000) );
+    }
+
 /**
  *
  */
@@ -2688,8 +2716,8 @@ TInt CSvgJavaInterfaceImpl::SvgStringtoEnumerationMappingSVGtoJSR(const TInt aAt
     default: 
         attribVal = KErrNotFound;
     
-    return attribVal;
     }
+    return attribVal;
 }
 /**
 * This maps the Enumeration from SVG to JSR.

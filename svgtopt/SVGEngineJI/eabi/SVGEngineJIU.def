@@ -94,4 +94,5 @@ EXPORTS
 	_ZTV10CJavaError @ 93 NONAME ; #<VT>#
 	_ZTV21CSvgJavaInterfaceImpl @ 94 NONAME ; #<VT>#
 	_ZN21CSvgJavaInterfaceImpl4NewLER9TFontSpec @ 95 NONAME
+	_ZN21CSvgJavaInterfaceImpl23SvgEngineRenderDocumentEiijjf @ 96 NONAME
 
