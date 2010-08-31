@@ -169,7 +169,7 @@ private:
     static const TUint  ENCODEDDATAGRANULARITY;
     TInt                iCommonHeaderLength;
     const TUint8* iCommonHeader;
-    VGErrorCode iVgErrorCode;
+    
     //Command specific logging methods
 #ifdef VGRENDERER_LOG
     RFileLogger iLog;//logs    

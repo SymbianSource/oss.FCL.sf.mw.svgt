@@ -39,7 +39,6 @@ CPseodoVGRendererImpl::CPseodoVGRendererImpl()
     iHandle             = 1;
     iCommonHeaderLength = 0;
     iCommonHeader = 0;
-    iVgErrorCode = VG_NO_ERROR;
     }
 
 CPseodoVGRendererImpl::~CPseodoVGRendererImpl()
@@ -233,9 +232,6 @@ void CPseodoVGRendererImpl::vgSetPaint(TUint paint, TUint paintModes)
 
 TUint CPseodoVGRendererImpl::vgCreatePaint()
     {
-    if(iVgErrorCode != VG_NO_ERROR)
-        return VG_INVALID_HANDLE;
-    
     iHandle++;
     EncodeInt8(EvgCreatePaint);
     EncodeInt32(iHandle);
@@ -248,10 +244,6 @@ TUint CPseodoVGRendererImpl::vgCreatePaint()
 TUint CPseodoVGRendererImpl::vgCreatePath(TInt pathFormat, TInt datatype, TReal32 scale, TReal32 bias,
         TInt segmentCapacityHint, TInt coordCapacityHint, TInt capabilities)
     {
-    if(iVgErrorCode != VG_NO_ERROR)
-        return VG_INVALID_HANDLE;
-    
-        
     iHandle++;
     EncodeInt8(EvgCreatePath);
     EncodeInt32(pathFormat);
@@ -391,7 +383,7 @@ void CPseodoVGRendererImpl::vgDrawPath(TUint path, TUint capabilities)
     EncodeInt16(capabilities);
 
 #ifdef VGRENDERER_LOG
-    LogvgDrawPath(path,0);   
+    LogvgDrawPath(paintModes,0);   
 #endif
 
     }
@@ -468,9 +460,6 @@ TInt CPseodoVGRendererImpl::vguLine(TUint path,TReal32 x0, TReal32 y0,TReal32 x1
 
 TUint CPseodoVGRendererImpl::vgCreateImage(TInt format, TInt width, TInt height, TInt allowedQuality)
     {
-    if(iVgErrorCode != VG_NO_ERROR)
-        return VG_INVALID_HANDLE;
-    
     iHandle++;
     EncodeInt8(EvgCreateImage);
     EncodeInt32(format);
@@ -478,9 +467,6 @@ TUint CPseodoVGRendererImpl::vgCreateImage(TInt format, TInt width, TInt height,
     EncodeInt32(height);
     EncodeInt8(allowedQuality);
     EncodeInt32(iHandle);
-#ifdef VGRENDERER_LOG
-    iLog.WriteFormat(_L("vgcreateimage"));
-#endif
     return iHandle;
     }
 
@@ -493,9 +479,6 @@ void CPseodoVGRendererImpl::vgDrawImage(TUint image)
     {
     EncodeInt8(EvgDrawImage);
     EncodeInt32(image);
-#ifdef VGRENDERER_LOG
-    iLog.WriteFormat(_L("vgdrawimage"));
-#endif
     }
 
 void CPseodoVGRendererImpl::vgClearImage(TUint image, TInt x, TInt y, TInt width, TInt height)
@@ -506,9 +489,6 @@ void CPseodoVGRendererImpl::vgClearImage(TUint image, TInt x, TInt y, TInt width
     EncodeInt32(y);
     EncodeInt32(width);
     EncodeInt32(height);
-#ifdef VGRENDERER_LOG
-    iLog.WriteFormat(_L("vgclearimage"));
-#endif    
     }
 
 void CPseodoVGRendererImpl::vgImageSubData(TUint image, const void * data, TInt dataStride,
@@ -643,9 +623,6 @@ void CPseodoVGRendererImpl::vgImageSubData(TUint image, const void * data, TInt 
 
         EncodeData(dstData, dataLength);
         delete [] dstData;
-#ifdef VGRENDERER_LOG
-        iLog.WriteFormat(_L("vgimagesubdata"));
-#endif        
         }
     else
         {
@@ -671,9 +648,6 @@ void CPseodoVGRendererImpl::vgDestroyImage(TUint aHandle)
     {
     EncodeInt8(EvgDestroyImage);
     EncodeInt32(aHandle);
-#ifdef VGRENDERER_LOG
-    iLog.WriteFormat(_L("vgdestroyimage"));
-#endif    
     }
 
 void CPseodoVGRendererImpl::vgDestroyPaint(TUint /*aHandle*/)
@@ -693,7 +667,8 @@ void CPseodoVGRendererImpl::vgFlush()
 
 TInt CPseodoVGRendererImpl::vgGetError()
     {
-   return iVgErrorCode;
+    //TODO
+    return 0;
     }
 
 MVGSurfaceImpl* CPseodoVGRendererImpl::CreateVGSurfaceL(TInt /*aOption*/)
@@ -733,13 +708,10 @@ inline TInt CPseodoVGRendererImpl::EncodeReal64(TReal64 aVal)
 
 TInt CPseodoVGRendererImpl::EncodeData(const TAny *aData, TUint aLength)
     {
-
-    if(iVgErrorCode==VG_NO_ERROR)
-        {
-        TInt result = KErrNone;
-        TPtr8 lPtr( iEncodedData->Des() );
-        TInt encodedDataLength      = lPtr.Length() + aLength;
-        TInt encodedDataMaxLength   = lPtr.MaxLength();
+    TInt result = KErrNone;
+    TPtr8 lPtr( iEncodedData->Des() );
+    TInt encodedDataLength      = lPtr.Length() + aLength;
+    TInt encodedDataMaxLength   = lPtr.MaxLength();
 
     if (encodedDataLength >= encodedDataMaxLength)
         {
@@ -754,12 +726,7 @@ TInt CPseodoVGRendererImpl::EncodeData(const TAny *aData, TUint aLength)
         lPtr.Append((TUint8*)(aData), aLength);
         }
 
-        return result;
-        }
-    else
-        {
-        return iVgErrorCode;
-        }
+    return result;
     }
 
 TInt CPseodoVGRendererImpl::ExpandEncodedData(TUint aNewLength)
@@ -773,7 +740,6 @@ TInt CPseodoVGRendererImpl::ExpandEncodedData(TUint aNewLength)
     if (tmpBuf == 0)
         {
         result = KErrNoMemory;
-        iVgErrorCode = VG_OUT_OF_MEMORY_ERROR;
         }
 
     else
@@ -791,17 +757,6 @@ TInt CPseodoVGRendererImpl::ExpandEncodedData(TUint aNewLength)
 
 void CPseodoVGRendererImpl::EmptyEncodedData()
     {
-    iVgErrorCode = VG_NO_ERROR;
-    if(iEncodedData->Length() > CPseodoVGRendererImpl::ENCODEDDATALENGTH)
-        {
-        delete iEncodedData;    
-        iEncodedData = HBufC8::New(CPseodoVGRendererImpl::ENCODEDDATALENGTH);
-        if(!iEncodedData)
-            {
-            iVgErrorCode = VG_OUT_OF_MEMORY_ERROR;
-            return;
-            }
-        }
     TPtr8 lPtr( iEncodedData->Des() );
     lPtr.Zero();
     WriteHeader();
