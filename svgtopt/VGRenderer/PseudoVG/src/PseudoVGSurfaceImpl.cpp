@@ -50,8 +50,8 @@ inline void CPseudoVGSurfaceImpl::ConstructL(CPseodoVGRendererImpl * aVGRenderer
 TInt CPseudoVGSurfaceImpl::InitializeSurface(TSize aSize, TInt /*aColorSpace*/)
     {
     iSize = aSize;
-    iPseodoVGRendererImpl->EmptyEncodedData();
-    return KErrNone;
+    return iPseodoVGRendererImpl->vgGetError();
+    
     }
 
 void CPseudoVGSurfaceImpl::SetConfiguration(TInt aOption, const TAny* aValue)
@@ -69,8 +69,9 @@ TInt CPseudoVGSurfaceImpl::CreateSurface(TInt /*aDisplayMode*/, RWindow */*aSurf
 
 TInt CPseudoVGSurfaceImpl::ResizeSurface(TSize aSize)
     {
-    iSize = aSize;
-    return KErrNone;
+    iSize = aSize;    
+    iPseodoVGRendererImpl->EmptyEncodedData();
+    return iPseodoVGRendererImpl->vgGetError();
     }
 
 TInt CPseudoVGSurfaceImpl::CopyBitmap(TInt aDisplayMode, TInt aMaskMode,CFbsBitmap *aBitmap, CFbsBitmap *aMask, TSize /*aSize*/)

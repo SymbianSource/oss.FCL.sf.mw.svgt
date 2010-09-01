@@ -24,6 +24,7 @@
 */
 
 #include "../svgtopt/group/bld.inf"
+#include "../svgtopt/SVGTPlugin/group/bld.inf"
 
 PRJ_PLATFORMS
 DEFAULT 

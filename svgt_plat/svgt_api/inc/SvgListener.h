@@ -23,7 +23,7 @@
 #include <e32base.h>
 #endif
 
-#include "xml/mxmlattributes.h"
+#include "MXMLAttributes.h"
 
 class CSvgElementImpl;
 

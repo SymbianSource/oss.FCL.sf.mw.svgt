@@ -26,7 +26,7 @@
 
 #include "SVGUseElementImpl.h"
 #include "SVGAnimationElementImpl.h"
-#include <xml/rxmlreader.h>
+#include "rxmlreader.h"
 
 #include "SVGPaintCssValueImpl.h"
 #include "SVGPathElementImpl.h"
@@ -1434,14 +1434,9 @@ TBool CSvgContentHandler::ProcessTransformL( const TDesC& /*aName*/,
         CleanupStack::PopAndDestroy( 1 ); // tBufC2
         }
 
-        TBool rVal = iCurrentElement->SetTransform(KTransform,tPf);
-        CleanupStack::PopAndDestroy( 2 ); // tBufC & TFinal
-                
-        if (!rVal)
-        {
-            return EFalse;
-        }
+        iCurrentElement->SetTransform(KTransform,tPf);
 
+    CleanupStack::PopAndDestroy( 2 ); // tBufC & TFinal
     return ETrue;
     }
 

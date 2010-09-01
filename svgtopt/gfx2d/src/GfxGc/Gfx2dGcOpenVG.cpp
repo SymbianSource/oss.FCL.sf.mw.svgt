@@ -48,7 +48,6 @@
 // OpenVG API Binding Symbian specific
 #include <vg/vgcontext_symbian.h>
 
-#include <svgtbitmap.h>
 // For allocating path segment type array
 // Found 130 to be max size at bootup
 const TInt KPathSegmentTypeInitialSize = 130;
@@ -62,21 +61,20 @@ _LIT( KDefaultFont, "serif" ); // Similar changes should be applied to \
 // --------------------------------------------------------------------------
 // CGfx2dGcOpenVG::CGfx2dGcOpenVG() : iScale( 1 ),
 // ---------------------------------------------------------------------------
-CGfx2dGcOpenVG::CGfx2dGcOpenVG( TBool aRenderOption ) :
-                        iRenderOption(aRenderOption),
-                        iGraphicsContextCreated( EFalse ),
+CGfx2dGcOpenVG::CGfx2dGcOpenVG( TBool /* aIsMainContext */ ) :
                         iFillOpacity( 1 ),
                         iScale( 1 ),
                         iStrokeColor( 0 ),
                         iStrokeOpacity( 1 ),
                         iBackgroundColor( 0xffffff ),
-                        iFontSize( 10 ),
-                        iFontWeight( -1 ),
-                        iFontStyle( -1 ),
-                        iFamilies( NULL ),
-                        iTextAnchor( EGfxTextAnchorNone ),
-                        iTextDecoration( EGfxTextDecorationNone ),
-                        iRenderQuality(VG_RENDERING_QUALITY_BETTER),
+                       iFontSize( 10 ),
+                       iFontWeight( -1 ),
+                       iFontStyle( -1 ),
+                       iFamilies( NULL ),
+                       iTextAnchor( EGfxTextAnchorNone ),
+                       iTextDecoration( EGfxTextDecorationNone ),
+                       iGraphicsContextCreated( EFalse ),
+                       iRenderQuality(VG_RENDERING_QUALITY_BETTER),
 		       						iCurrentRendererType(ESVGRendererSW)
                        
     {
@@ -88,9 +86,9 @@ CGfx2dGcOpenVG::CGfx2dGcOpenVG( TBool aRenderOption ) :
 // --------------------------------------------------------------------------
 // CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( CFbsBitmap* aFrameBuffer, TFontSpec& aFontSpec )
 // ---------------------------------------------------------------------------
- CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider, TBool aRenderOption )
+ CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider, TBool aIsMainContext )
     {
-    CGfx2dGcOpenVG* self = new( ELeave ) CGfx2dGcOpenVG( aRenderOption );
+    CGfx2dGcOpenVG* self = new( ELeave ) CGfx2dGcOpenVG( aIsMainContext );
     CleanupStack::PushL( self );
     self->ConstructL( aBufferSize, aFontSpec, aSvgBitmapFontProvider);
     CleanupStack::Pop();
@@ -125,7 +123,7 @@ void CGfx2dGcOpenVG::ConstructL( const TSize aBufferSize, TFontSpec& aFontSpec, 
 
     iDashArray = new ( ELeave ) CArrayFixFlat<VGfloat>( 32 );
     
-    iVgRenderer  = CVGRenderer::NewL(ESVGRendererSW, iRenderOption);
+    iVgRenderer  = CVGRenderer::NewL(ESVGRendererSW, 0);
     iVgSurface   = iVgRenderer->GetCurrentSurface();
     ChangeBufferSizeL( aBufferSize );
     }
@@ -133,9 +131,9 @@ void CGfx2dGcOpenVG::ConstructL( const TSize aBufferSize, TFontSpec& aFontSpec, 
 // --------------------------------------------------------------------------
 // CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( CFbsBitmap* aFrameBuffer, TFontSpec& aFontSpec )
 // ---------------------------------------------------------------------------
- CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider,SVGRendererId aRendererType,TBool aRenderOption )
+ CGfx2dGcOpenVG* CGfx2dGcOpenVG::NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider,SVGRendererId aRendererType,TBool aIsMainContext )
     {
-    CGfx2dGcOpenVG* self = new( ELeave ) CGfx2dGcOpenVG( aRenderOption );
+    CGfx2dGcOpenVG* self = new( ELeave ) CGfx2dGcOpenVG( aIsMainContext );
     CleanupStack::PushL( self );
     self->ConstructL( aBufferSize, aFontSpec, aSvgBitmapFontProvider,aRendererType);
     CleanupStack::Pop();
@@ -163,7 +161,7 @@ void CGfx2dGcOpenVG::ConstructL( const TSize aBufferSize, TFontSpec& aFontSpec, 
 
     iDashArray = new ( ELeave ) CArrayFixFlat<VGfloat>( 32 );
     iCurrentRendererType = aRendererType;
-    iVgRenderer = CVGRenderer::NewL(aRendererType, iRenderOption);
+    iVgRenderer = CVGRenderer::NewL(aRendererType, 0);
     iVgSurface   = iVgRenderer->GetCurrentSurface();
     
     iVgSurface->InitializeSurface( aBufferSize, VGI_COLORSPACE_SRGB );
@@ -2327,36 +2325,6 @@ void CGfx2dGcOpenVG::UpdateFramebufferL( CFbsBitmap* aBitmap, CFbsBitmap* aMask,
     iVgRenderer->vgSeti( VG_FILTER_CHANNEL_MASK, KOriginalFilterMasks );
     }
 
- void CGfx2dGcOpenVG::GenerateMask(CSvgtBitmap* aMask)
-     {
-     if ( !aMask || aMask->SizeInPixels() != iColorBufferSize )
-         {
-         return;
-         }
-
-     const TDisplayMode KMaskDisplayMode = aMask->DisplayMode();
-
-     if ( KMaskDisplayMode != EGray256 && KMaskDisplayMode != EGray2 )
-         {
-         return;
-         }
-
-     const TInt KOriginalFilterMasks = iVgRenderer->vgGeti( VG_FILTER_CHANNEL_MASK );//
-     const TInt KStride = CFbsBitmap::ScanLineLength( iColorBufferSize.iWidth, KMaskDisplayMode );
-
-     // Change to get alpha values from OpenVG
-     iVgRenderer->vgSeti( VG_FILTER_CHANNEL_MASK, VG_ALPHA );
-
-     VGImageFormat format = ( KMaskDisplayMode == EGray256 ) ? VG_A_8 : VG_BW_1;
-
-     // Get data address of last line and move upwards (negative stride)
-     // OpenVG uses Cartesian coordinate system and Symbian uses Screen coordinate system.
-
-     iVgRenderer->vgReadPixels( aMask->BitmapBuffer(), -KStride, format, 0, 0,
-                   iColorBufferSize.iWidth, iColorBufferSize.iHeight );
-     // Set back the original filter-masks
-     iVgRenderer->vgSeti( VG_FILTER_CHANNEL_MASK, KOriginalFilterMasks );
-     }
 
 // ==========================================================================
 //  This function calls the low level function to set fill opacity value
@@ -3018,109 +2986,4 @@ void CGfx2dGcOpenVG::SetBitmapHeader(const TDesC* aHeaderData)
 const TPtrC8 CGfx2dGcOpenVG::TLVEncodedData() const
     {
     return(iVgRenderer->TLVEncodedData());
-    }
-
-//--------------------------------------------------------------------------------
-// M2G: UpdateFramebufferL() is overloaded to enable rendering on target buffer.
-//--------------------------------------------------------------------------------
-void CGfx2dGcOpenVG::UpdateFramebufferL( CSvgtBitmap* aBitmap, CSvgtBitmap* aMask )
-    {
-    if ( !aBitmap || aBitmap->SizeInPixels() != iColorBufferSize )
-        {
-        return;
-        }
-
-    const TDisplayMode KBitmapDisplayMode = aBitmap->DisplayMode();
-    // This check just before VGISymbianCopyToBitmap avoid putting lot
-    // many similar error checks in the code. If there is any problem 
-    // during OpenVG call we simply leave without drawing any thing.  
-         VGErrorCode vgret = (VGErrorCode)iVgRenderer->vgGetError();                    
-        
-    if(vgret != VG_NO_ERROR )
-    {
-        User::LeaveIfError(OpenVGErrorToSymbianError(vgret));
-    }
-
-    // EGray2 is not support in VGISymbianCopyToBitmap API
-    if ( KBitmapDisplayMode == EGray2 )
-        {
-        const TInt KStride = aBitmap->Stride();
-
-        iVgRenderer->vgReadPixels( aBitmap->BitmapBuffer(), -KStride, VG_BW_1, 0, 0,
-                      iColorBufferSize.iWidth, iColorBufferSize.iHeight );
-        }
-    // All other color modes
-    else
-        {
-        // No Mask -- to be generated in GenerateMask
-        TInt error=KErrNone;
-        
-        //In cases, where the mask/aMaskBitmap != NULL, the hint should be defined as VGI_SKIP_TRANSPARENT_PIXELS.
-        //In all other cases, i.e., when mask/aMaskBitmap == NULL, the definition should be VGI_COPY_TRANSPARENT_PIXELS
-        error = iVgSurface->CopyBitmap(ENone,ENone, aBitmap, aMask, iColorBufferSize);
-        
-        if ( error != KErrNone )
-            {
-            #ifdef _DEBUG
-                RDebug::Printf("VGICopyToTarget failed: error code: %d", error );
-                RDebug::Printf(" - Color mode: %d", aBitmap->DisplayMode() );
-                RDebug::Printf(" - Bitmap size: %dx%d", iColorBufferSize.iWidth, iColorBufferSize.iHeight );
-            #endif
-            User::LeaveIfError(error);
-            }
-        }
-    }
-
-//--------------------------------------------------------------------------------
-// M2G: UpdateFramebufferL() is overloaded to enable rendering on target buffer.
-//--------------------------------------------------------------------------------
-void CGfx2dGcOpenVG::UpdateFramebufferL( CSvgtBitmap* aBitmap, CSvgtBitmap* aMask,TSize /*BitmapSize*/,TDisplayMode aBitmapDspMode,TDisplayMode aMaskDspMode )
-    {
-    if ( !aBitmap)
-        {
-        return;
-        }
-
-    const TDisplayMode KBitmapDisplayMode = aBitmap->DisplayMode();
-    // This check just before VGISymbianCopyToBitmap avoid putting lot
-    // many similar error checks in the code. If there is any problem 
-    // during OpenVG call we simply leave without drawing any thing.  
-         VGErrorCode vgret = (VGErrorCode)iVgRenderer->vgGetError();                    
-                 
-    if(vgret != VG_NO_ERROR )
-    {
-        User::LeaveIfError(OpenVGErrorToSymbianError(vgret));
-    }
-
-    // EGray2 is not support in VGISymbianCopyToBitmap API
-    if ( KBitmapDisplayMode == EGray2 )
-        {
-        const TInt KStride = aBitmap->Stride();
-
-        iVgRenderer->vgReadPixels( aBitmap->BitmapBuffer(), -KStride, VG_BW_1, 0, 0,
-                      iColorBufferSize.iWidth, iColorBufferSize.iHeight );
-
-        }
-    // All other color modes
-    else
-        {
-        // No Mask -- to be generated in GenerateMask
-        TInt error=KErrNone;
-        
-        //In cases, where the mask/aMaskBitmap != NULL, the hint should be defined as VGI_SKIP_TRANSPARENT_PIXELS.
-        //In all other cases, i.e., when mask/aMaskBitmap == NULL, the definition should be VGI_COPY_TRANSPARENT_PIXELS
-        
-        error = iVgSurface->CopyBitmap(aBitmapDspMode, aMaskDspMode, aBitmap, aMask, iColorBufferSize);
-        
-        if ( error != KErrNone )
-            {
-            #ifdef _DEBUG
-                RDebug::Printf("VGICopyToTarget failed: error code: %d", error );
-                RDebug::Printf(" - Color mode: %d", aBitmap->DisplayMode() );
-                RDebug::Printf(" - Bitmap size: %dx%d", iColorBufferSize.iWidth, iColorBufferSize.iHeight );
-            #endif
-            User::LeaveIfError(error);
-            }
-        }
-    
     }

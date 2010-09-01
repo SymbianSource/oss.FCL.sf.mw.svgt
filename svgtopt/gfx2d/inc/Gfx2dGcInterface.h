@@ -34,7 +34,6 @@
 #include "SvgBitmapFontProvider.h"
 class MGfxShape;
 class MGfxPaint;
-class CSvgtBitmap;
 
 typedef enum
 {
@@ -348,10 +347,6 @@ class CGfx2dGc : public CBase
          */
         virtual void UpdateFramebufferL( CFbsBitmap* aFrameBuffer, CFbsBitmap* aMask ) = 0;
         virtual void UpdateFramebufferL( CFbsBitmap* aFrameBuffer, CFbsBitmap* aMask,TSize aFrameBufferSize,TDisplayMode aFrameBufferMode,TDisplayMode aMaskDspMode ) =0;
-
-        
-        virtual void UpdateFramebufferL( CSvgtBitmap* /*aFrameBuffer*/, CSvgtBitmap* /*aMask*/ ){}
-        virtual void UpdateFramebufferL( CSvgtBitmap* /*aFrameBuffer*/, CSvgtBitmap* /*aMask*/,TSize /*aFrameBufferSize*/,TDisplayMode /*aFrameBufferMode*/,TDisplayMode /*aMaskDspMode*/ ){}
         /**
          * Blend aFrameBuffer with background buffer using the opacity value
          *
@@ -370,7 +365,6 @@ class CGfx2dGc : public CBase
           * @return
           */
 		virtual void GenerateMask(CFbsBitmap* aMask)=0;
-        virtual void GenerateMask(CSvgtBitmap* /*aMask*/){};
 
 		  /**
          * Set the fill opacity value

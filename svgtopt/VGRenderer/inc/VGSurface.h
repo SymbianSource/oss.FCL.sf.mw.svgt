@@ -27,8 +27,6 @@ class RWindow;
 class CFbsBitmap;
 class CVGRenderer;
 
-class CSvgtBitmap;
-
 /**
  *  CVGSurface
  * 
@@ -123,11 +121,6 @@ public:
         return iImpl->CopyBitmap(aDisplayMode,aMaskMode, aBitmap, aMask, aSize);
         }
  
-    TInt CopyBitmap(TInt aDisplayMode,TInt aMaskMode,CSvgtBitmap *aBitmap, CSvgtBitmap *aMask, TSize aSize)
-        {
-        return iImpl->CopyBitmap(aDisplayMode,aMaskMode, aBitmap, aMask, aSize);
-        }
-
     /**
      * @fn          PrepareToBindClientBuffer
      *              Prepares the renderer to bind to an image. 

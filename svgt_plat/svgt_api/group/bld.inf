@@ -33,7 +33,3 @@ PRJ_EXPORTS
 ../inc/SVGAnimationListener.h     MW_LAYER_PLATFORM_EXPORT_PATH(SVGAnimationListener.h)
 ../inc/SVGRequestObserver.h     MW_LAYER_PLATFORM_EXPORT_PATH(SVGRequestObserver.h)
 ../inc/SVGRendererId.h		MW_LAYER_PLATFORM_EXPORT_PATH(SVGRendererId.h)
-
-../inc/svgtbitmap.h     MW_LAYER_PLATFORM_EXPORT_PATH(svgtbitmap.h)
-../inc/svgtbitmap.inl   MW_LAYER_PLATFORM_EXPORT_PATH(svgtbitmap.inl)
-

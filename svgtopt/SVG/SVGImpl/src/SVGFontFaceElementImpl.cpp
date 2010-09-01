@@ -117,31 +117,28 @@ CSvgFontFaceElementImpl::~CSvgFontFaceElementImpl()
     {
     //AJD this whole thing needs to be replaced with some sort of external resource registry area....
     //for images, fonts, other svg files
-    CSvgDocumentImpl * ownerDoc = (CSvgDocumentImpl*)iOwnerDocument;
-    if ( ownerDoc )
+    if ( ((CSvgDocumentImpl*)iOwnerDocument)->Engine() && ((CSvgDocumentImpl*)iOwnerDocument)->Engine()->iFontHashMap)
+	{
+    TRAPD(err, ((CSvgDocumentImpl*)iOwnerDocument)->Engine()->iFontHashMap->RemoveReferenceFromFontL(iFontFamily->Des()));
+    if (err)
         {
-        if ( ownerDoc->Engine() && ownerDoc->Engine()->iFontHashMap)
-            {
-            TRAPD(err, ownerDoc->Engine()->iFontHashMap->RemoveReferenceFromFontL(iFontFamily->Des()));
-            if (err)
-                {
-                #ifdef _DEBUG
-                RDebug::Printf("CSvgFontFaceElementImpl::~CSvgFontFaceElementImpl: Error trapped=%d", err);
-                #endif
-                }
-            }
-        
-        if ( ownerDoc->iFontHashMap)
-            {
-            TRAPD(err, ownerDoc->iFontHashMap->RemoveReferenceFromFontL(iFontFamily->Des()));
-            if (err)
-                {
-                #ifdef _DEBUG
-                RDebug::Printf("CSvgFontFaceElementImpl::~CSvgFontFaceElementImpl: Error trapped=%d", err);
-                #endif
-                }
-            }
+        #ifdef _DEBUG
+        RDebug::Printf("CSvgFontFaceElementImpl::~CSvgFontFaceElementImpl: Error trapped=%d", err);
+        #endif
         }
+	}
+
+	if ( (CSvgDocumentImpl*)iOwnerDocument && ((CSvgDocumentImpl*)iOwnerDocument)->iFontHashMap)
+	{
+	TRAPD(err, ((CSvgDocumentImpl*)iOwnerDocument)->iFontHashMap->RemoveReferenceFromFontL(iFontFamily->Des()));
+    if (err)
+        {
+        #ifdef _DEBUG
+        RDebug::Printf("CSvgFontFaceElementImpl::~CSvgFontFaceElementImpl: Error trapped=%d", err);
+        #endif
+        }
+	}
+
     if ( iFontFamily )
         {
         delete iFontFamily;

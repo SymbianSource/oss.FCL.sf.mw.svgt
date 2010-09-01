@@ -19,12 +19,7 @@
 #include <platform_paths.hrh>
 
 ALWAYS_BUILD_AS_ARM
-/* Srini: Raptor automatically adds --cpu 5te when building for rvct4.0
-                           and adds --cpu 5t when building with rvct 2.2.
-                           basically the option is redundant. please don't add the option.
-
-  */     
-OPTION_REPLACE ARMCC -O3 -Otime
+OPTION_REPLACE ARMCC --cpu 5T -O3 -Otime
 TARGET SVGEngine.dll
 TARGETTYPE dll
 
@@ -61,7 +56,6 @@ SOURCE SVGAttributeVerifier.cpp
 SOURCE SVGErrorImpl.cpp
 SOURCE Svgdecoder.cpp
 SOURCE SVGFourPointRect.cpp
-
 
 SOURCEPATH ../../SVGImpl/src
 

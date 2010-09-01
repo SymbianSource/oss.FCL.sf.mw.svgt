@@ -181,8 +181,7 @@ CNvgEngine::CNvgEngine()
       iLastPathDataType(0),
       iPreserveAspectSetting(ENvgPreserveAspectRatio_XmidYmid),
       iSmilFitSetting(ENvgMeet),
-      iVGImageBinder(0),
-      iBackgroundColor(0)
+      iVGImageBinder(0)
     {
     }
 
@@ -407,11 +406,6 @@ void CNvgEngine::DoDrawNVGL(const TDesC8& aBuffer, const TSize& aSize, CFbsBitma
         iCurrentBufferSize = aSize;
         }
     
-    if (iBackgroundColor)
-        {
-        ClearBackground();
-        }
-
     iDstBimtap = aDstBitmap;
     
     TDereferencer nvgIconData(aBuffer);
@@ -1565,14 +1559,14 @@ void CNvgEngine::GenerateMask(CFbsBitmap* aMask)
 
 void CNvgEngine::ClearBackground()
     {
-    TUint32 rgba = iBackgroundColor;//(iBackgroundColor << 8) | (iBackgroundColor >> 24);
+    TUint32 rgba = (iBackgroundColor << 8) | (iBackgroundColor >> 24);
     TInt32 r, g, b, a;
     r = (TInt)((rgba & 0xFF000000) >> 24);
     g = (TInt)((rgba & 0x00FF0000) >> 16);
     b = (TInt)((rgba & 0x0000FF00) >> 8);
     a = (TInt)(rgba & 0x000000FF);
     
-    //r += r >> 7; g += g >> 7; b += b >> 7; a += a >> 7;
+    r += r >> 7; g += g >> 7; b += b >> 7; a += a >> 7;
     
     const VGfloat KInverse255 =  1.0f/256.0f;
     const VGfloat clearColor[4] = { (KInverse255 * VGfloat (r)),
@@ -1580,10 +1574,10 @@ void CNvgEngine::ClearBackground()
             (KInverse255 * VGfloat (b)),
             (KInverse255 * VGfloat (a)) };
     
-    //vgSeti(VG_SCISSORING, VG_FALSE);
+    vgSeti(VG_SCISSORING, VG_FALSE);
     vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
     vgClear(0, 0, iCurrentBufferSize.iWidth, iCurrentBufferSize.iHeight);
-    //vgSeti(VG_SCISSORING, VG_TRUE);
+    vgSeti(VG_SCISSORING, VG_TRUE);
     }
 
 TBool CNvgEngine::IsIdentity(VGfloat array[])

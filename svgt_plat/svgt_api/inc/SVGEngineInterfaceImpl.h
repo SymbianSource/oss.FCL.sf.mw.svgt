@@ -105,9 +105,6 @@ class       CSvgErrorImpl;
 class       CSvgTextElementImpl;
 
 class 		CSvgBitmapFontProvider;
-
-class       CSvgtBitmap;
-
 class MRect
     {
     public:
@@ -650,8 +647,6 @@ class CSvgEngineInterfaceImpl : public CBase
          */
         IMPORT_C void GenerateMask( CFbsBitmap* aMask, TInt aEngine = NULL );
 
-        IMPORT_C void GenerateMask( CSvgtBitmap* aMask, TInt aEngine = NULL );
-
         /**
          * Set the color for clearing background.
          *
@@ -876,7 +871,6 @@ class CSvgEngineInterfaceImpl : public CBase
          */
          IMPORT_C void SetGdiContextL( CSvgEngineImpl* aEngine, CFbsBitmap* aFrameBuffer );
 
-         IMPORT_C void SetGdiContextL( CSvgEngineImpl* aEngine, CSvgtBitmap* aFrameBuffer );
          /**
          * Associate the given document with the given engine.
          *

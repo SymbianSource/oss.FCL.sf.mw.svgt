@@ -305,12 +305,11 @@ TBool TTokenizer::ParseDecimal( const TDesC& aString, TReal32& aValue, TPtrC& aR
         TLex lex( decimalString );
         // Specify the decimal seperator, instead of using
         // locale specific seperator.
-        if(lex.Val( aValue, '.' )== KErrNone)
-            {
-            tokenizer.SkipWhiteSpace();
-            aRemainder.Set( tokenizer.Remainder() );
-            return ETrue;
-            }
-         }
+        lex.Val( aValue, '.' );
+        
+        tokenizer.SkipWhiteSpace();
+        aRemainder.Set( tokenizer.Remainder() );
+        return ETrue;
+        }
     return EFalse;
     }

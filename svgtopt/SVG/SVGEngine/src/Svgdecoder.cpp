@@ -2511,19 +2511,29 @@ TBool CSvgDecoder::DecodeTestAttributeL(const TUint16 aName)
 // ---------------------------------------------------------------------------
 TBool CSvgDecoder::DecodeIdAndXmlAttributeL(const TUint16 aName)
 	{
-    TBool rVal = EFalse;
+
 	if (aName== KAtrId)
 		{
-		rVal = iCurrentElement->SetIdandXmlbaseL( _L("id"), DecodeTDesCLC());
-		CleanupStack::PopAndDestroy( 1 );
+		iCurrentElement->SetIdandXmlbaseL( _L("id"), DecodeTDesCLC());
+		 CleanupStack::PopAndDestroy( 1 );
+		return ETrue;
 		}
-	else if (aName== KAtrXmlBase)
+
+	if (aName== KAtrXmlBase)
 		{
-		rVal = iCurrentElement->SetIdandXmlbaseL( _L("xml:base"), DecodeTDesCLC());
-		CleanupStack::PopAndDestroy( 1 );
+		iCurrentElement->SetIdandXmlbaseL( _L("xml:base"), DecodeTDesCLC());
+		 CleanupStack::PopAndDestroy( 1 );
+		return ETrue;
 		}
-	return rVal;
+
+	else
+		{
+		return EFalse;
+		}
 	}
+
+
+
 
 // --------------------------------------------------------------------------
 // TBool CSvgDecoder::DecodeUriRefAttributeL(const TUint16 aName)

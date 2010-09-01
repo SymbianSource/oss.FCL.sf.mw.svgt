@@ -26,8 +26,6 @@
 #include "VGSurface.h"
 #include <VG/openvg.h>
 
-class CSvgtBitmap;
-
 const TUint8 KMediaAnimationVisible =  2;
   
 /**
@@ -49,7 +47,7 @@ class CGfx2dGcOpenVG : public CGfx2dGc
          */
          static CGfx2dGcOpenVG* NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider, TBool aIsMain = ETrue );
 
-         static CGfx2dGcOpenVG* NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider,SVGRendererId aRendererType,TBool aRenderOption = ETrue );
+         static CGfx2dGcOpenVG* NewL( const TSize aBufferSize, TFontSpec& aFontSpec, CSvgBitmapFontProvider* aSvgBitmapFontProvider,SVGRendererId aRendererType,TBool aIsMain = ETrue );
          void                 GetFontScaled( TFloatFixPt aHeight, const TDesC& aTypefaceName, CFont*& aFont, TFontSpec& aFontSpec );
 
         /**
@@ -354,10 +352,7 @@ class CGfx2dGcOpenVG : public CGfx2dGc
          void UpdateFramebufferL( CFbsBitmap* aBitmap, CFbsBitmap* aMask );
 
          void UpdateFramebufferL( CFbsBitmap* aBitmap, CFbsBitmap* aMask,TSize BitmapSize,TDisplayMode aBitmapDspMode,TDisplayMode aMaskDspMode );
-
-         void UpdateFramebufferL( CSvgtBitmap* aBitmap, CSvgtBitmap* aMask );
-         void UpdateFramebufferL( CSvgtBitmap* aBitmap, CSvgtBitmap* aMask,TSize BitmapSize,TDisplayMode aBitmapDspMode,TDisplayMode aMaskDspMode );
-         /**
+        /**
          * Blend aFrameBuffer with background buffer using the opacity value
          *
          * @since 1.0
@@ -375,8 +370,7 @@ class CGfx2dGcOpenVG : public CGfx2dGc
           * @return
           */
 		 void GenerateMask(CFbsBitmap* aMask);
-		 void GenerateMask(CSvgtBitmap* aMask);
-		  
+
 		  /**
          * Set the fill opacity value
         *
@@ -516,12 +510,6 @@ class CGfx2dGcOpenVG : public CGfx2dGc
         // Color conversion/copy to Symbian bitmap is needed as final step
         TSize                           iColorBufferSize;
 
-        TDisplayMode    iDisplayMode;
-        
-        // M2G: Variable to specify the target rendering option (rendering onto bitmap or onto target)
-        TBool iRenderOption;
-        TBool iGraphicsContextCreated;
-                
         TGfxRectangle2D                 iClip;
         MGfxPaint*                      iFillColor;
         TFloatFixPt						iFillOpacity;
@@ -546,6 +534,10 @@ class CGfx2dGcOpenVG : public CGfx2dGc
         // TInt32 array to draw shapes.
         TFontSpec                       iFontSpec;
         //OpenVG stuff
+
+        TDisplayMode    iDisplayMode;
+        TBool iGraphicsContextCreated;
+        TBool iIsMainContext;
 
         VGPaint							iFillPaint;
         VGPaint							iStrokePaint;

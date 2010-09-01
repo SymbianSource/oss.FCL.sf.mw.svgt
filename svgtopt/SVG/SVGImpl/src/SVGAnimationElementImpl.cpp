@@ -473,9 +473,6 @@ void CSvgAnimationElementImpl::ResetEventListener()
 //
 void CSvgAnimationElementImpl::RemoveEventListener()
     {
-    if ( !iMyAnimationElementList )
-         return;
-    
     FindAllAnimationElements( (CSvgElementImpl* )this, iMyAnimationElementList );
 
     // Remove event listening for every animation elements that are child of

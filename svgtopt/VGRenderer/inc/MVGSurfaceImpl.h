@@ -23,7 +23,6 @@
 
 class RWindow;
 class CFbsBitmap;
-class CSvgtBitmap;
 
 class MVGSurfaceImpl
 {
@@ -40,14 +39,12 @@ public:
     virtual TInt InitializeSurface(TSize aSize, TInt aColorSpace) = 0;
     
     virtual TInt CreateSurface(TInt aDisplayMode, RWindow *aSurface, CFbsBitmap *aBitmap) = 0;
-    virtual TInt CreateSurface(TInt /*aDisplayMode*/, RWindow */*aSurface*/, CSvgtBitmap */*aBitmap*/){ return KErrNotSupported; }
     
     virtual TInt ResizeSurface(TSize aSize) = 0;
     
     virtual void SetConfiguration(TInt aOption, const TAny* aValue) = 0;
     
     virtual TInt CopyBitmap(TInt aDisplayMode, TInt aMaskMode, CFbsBitmap *aBitmap, CFbsBitmap *aMask, TSize aSize = TSize(0,0)) = 0;
-    virtual TInt CopyBitmap(TInt /*aDisplayMode*/, TInt /*aMaskMode*/, CSvgtBitmap* /*aBitmap*/, CSvgtBitmap */*aMask*/, TSize /*aSize*/ = TSize(0,0)) { return KErrNotSupported; }
     
     virtual TInt BindClientBuffer(TInt aBuffer) = 0;
     

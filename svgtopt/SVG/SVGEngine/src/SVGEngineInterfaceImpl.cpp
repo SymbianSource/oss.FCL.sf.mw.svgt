@@ -1055,36 +1055,67 @@ EXPORT_C void CSvgEngineInterfaceImpl::IsPanPossibleFourWay
     TInt aX,aY;
     // Check in Left direction
     aX = 1; aY = 0;
-    //Coverity fixes
-    if ( bound.iX >= zero )
+    if ( xmax <= clipWidth && aX < 0 )
         aX = 0;
- 
+    if ( bound.iX >= zero && aX > 0 )
+        aX = 0;
+    if ( ymax <= clipHeight && aY < 0 )
+        aY = 0;
+    if ( bound.iY >= zero && aY > 0 )
+        aY = 0;
     // Do panning
-    left = ((aY)||(aX));
+    if ( ( aY == 0 ) && ( aX == 0 ) )
+	    left = EFalse;
+    else
+	    left = ETrue;
 
     // Check in Right direction
     aX = -1; aY = 0;
-    if ( xmax <= clipWidth )
+    if ( xmax <= clipWidth && aX < 0 )
         aX = 0;
-    
+    if ( bound.iX >= zero && aX > 0 )
+        aX = 0;
+    if ( ymax <= clipHeight && aY < 0 )
+        aY = 0;
+    if ( bound.iY >= zero && aY > 0 )
+        aY = 0;
     // Do panning
-    right = ((aY)||(aX));
+    if ( ( aY == 0 ) && ( aX == 0 ) )
+	    right = EFalse;
+    else
+	    right = ETrue;
 
     // Check in Up direction
     aX = 0; aY = 1;
-    if ( bound.iY >= zero )
+    if ( xmax <= clipWidth && aX < 0 )
+        aX = 0;
+    if ( bound.iX >= zero && aX > 0 )
+        aX = 0;
+    if ( ymax <= clipHeight && aY < 0 )
         aY = 0;
-    
+    if ( bound.iY >= zero && aY > 0 )
+        aY = 0;
     // Do panning
-    up = ((aY)||(aX));
+    if ( ( aY == 0 ) && ( aX == 0 ) )
+	    up = EFalse;
+    else
+	    up = ETrue;
 
     // Check in down direction
     aX = 0; aY = -1;
-    if ( ymax <= clipHeight )
+    if ( xmax <= clipWidth && aX < 0 )
+        aX = 0;
+    if ( bound.iX >= zero && aX > 0 )
+        aX = 0;
+    if ( ymax <= clipHeight && aY < 0 )
         aY = 0;
-    
+    if ( bound.iY >= zero && aY > 0 )
+        aY = 0;
     // Do panning
-    down = ((aY)||(aX));
+    if ( ( aY == 0 ) && ( aX == 0 ) )
+	    down = EFalse;
+    else
+	    down = ETrue;
 
     }
 // --------------------------------------------------------------------------
@@ -1188,10 +1219,18 @@ EXPORT_C TSize CSvgEngineInterfaceImpl::ContentDimensions( TInt aEngine )
             {
                 bbSize.iWidth  = ((TReal32)bbSize.iWidth)  * percentWidth / 100.0;    
             }
+            else
+            {
+                bbSize.iWidth = bbSize.iWidth;
+            }
         
             if( svgElement->iHeightInPercentage )
             {
                 bbSize.iHeight = ((TReal32)bbSize.iHeight) * percentHeight / 100.0;    
+            }
+            else
+            {
+                bbSize.iHeight = bbSize.iHeight;
             }
         return bbSize;
         }
@@ -1499,13 +1538,6 @@ EXPORT_C void CSvgEngineInterfaceImpl::GenerateMask(CFbsBitmap* aMask, TInt aEng
         }
     }
 
-EXPORT_C void CSvgEngineInterfaceImpl::GenerateMask(CSvgtBitmap* aMask, TInt aEngine )
-    {
-        if ( ChooseEngine( aEngine ) )
-        {
-            iSvgEngine->GenerateMask(aMask);
-        }
-    }
 
 // --------------------------------------------------------------------------
 // EXPORT_C void CSvgEngineInterfaceImpl::SetBackgroundColor(TUint32 aRGBA8888Color, CSvgEngineImpl* aEngine)
@@ -2472,19 +2504,6 @@ EXPORT_C void CSvgEngineInterfaceImpl::SetGdiContextL( CSvgEngineImpl* aEngine, 
         aEngine->SetGdiContextL( aFrameBuffer );
         }
 }
-
-// --------------------------------------------------------------------------
-//  M2G: Overloaded SetGdiContextL() for CSvgtBitmap to enable rendering on target buffer.
-// ---------------------------------------------------------------------------
-EXPORT_C void CSvgEngineInterfaceImpl::SetGdiContextL( CSvgEngineImpl* aEngine, CSvgtBitmap* aFrameBuffer )
-    {
-    if( aEngine )
-        {
-        aEngine->EnableTargetRendering(ETrue);
-        aEngine->SetGdiContextL( aFrameBuffer );
-        }
-    }
-
 // --------------------------------------------------------------------------
 // EXPORT_C void CSvgEngineInterfaceImpl::SetDocument( CSvgEngineImpl* aEngine, CSvgDocumentImpl* aDocument )
 // ---------------------------------------------------------------------------
@@ -3083,9 +3102,10 @@ EXPORT_C void CSvgEngineInterfaceImpl::GetFourPointElementBoundingBox(CSvgTextEl
     TSvgFourPointRect fourPointRect;
 
 	//updates CTM from root
+	aTextElementHandle->UpdateCTM();
+
     if (aTextElementHandle)
     {
-        aTextElementHandle->UpdateCTM();
         aTextElementHandle->GetFourPointBBox(fourPointRect);
     }
 

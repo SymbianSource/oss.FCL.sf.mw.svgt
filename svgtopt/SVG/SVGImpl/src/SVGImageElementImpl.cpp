@@ -29,7 +29,7 @@
 
 #include <imcvcodc.h>
 
-//#include <caf/caf.h>
+#include <caf/caf.h>
 
 const TInt  KErrNoAttributeSet  = -1;
 #define KSVGWAITFORIMAGEDOWNLOAD 1

@@ -33,8 +33,6 @@ typedef int SvgSurfaceHandle;
 typedef int SvgPathHandle;
 typedef short SvgAttrType;
 
-typedef unsigned int SvgtBitmapHandle;
-
 class CSvgEngineImpl;
 class CSvgDocumentImpl;
 class CFbsBitmap;
@@ -1490,12 +1488,7 @@ public:
 		SvgEngineHandle aEngineHandle, SvgDocumentHandle aDocumentHandle, 
 		TInt aSurfaceHandle, TInt aSurfaceMaskHandle = NULL, TReal32 aCurrentTime = 0.0f ) __SOFTFP;
 
-    IMPORT_C void SvgEngineRenderDocument( 
-        SvgEngineHandle aEngineHandle, SvgDocumentHandle aDocumentHandle, 
-        SvgtBitmapHandle aSurfaceHandle, SvgtBitmapHandle aSurfaceMaskHandle = NULL, 
-        TReal32 aCurrentTime = 0.0f ) __SOFTFP;
-
-    IMPORT_C void SvgEngineRenderDocumentL( 
+	IMPORT_C void SvgEngineRenderDocumentL( 
 		SvgEngineHandle aEngineHandle, SvgDocumentHandle aDocumentHandle, 
 		TInt aSurfaceHandle, const TPoint& aAnchor, const TRect& aRenderArea, TReal32 aCurrentTime, TReal32 aAlpha ) __SOFTFP;
 		

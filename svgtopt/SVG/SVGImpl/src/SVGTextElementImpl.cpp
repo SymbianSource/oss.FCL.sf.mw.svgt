@@ -2885,7 +2885,12 @@ TBool CSvgTextElementImpl::LoadExternalSVGFontL(const TDesC& aFontFamily)
     		//SetFontFamilyL(_L("NokiaSansWide"));
     		if(!aReturn)
     		    {
-	            delete lNewFontDoc;
+    		      if(lNewFontDoc)
+    		        {
+    		            delete lNewFontDoc;
+                        lNewFontDoc = NULL;  
+    		        }
+    		      
     		    }
     		return ETrue;
     	}
@@ -2899,6 +2904,7 @@ TBool CSvgTextElementImpl::LoadExternalSVGFontL(const TDesC& aFontFamily)
     }
 
     delete lNewFontDoc;
+    lNewFontDoc = NULL;
     return EFalse;
 }
 

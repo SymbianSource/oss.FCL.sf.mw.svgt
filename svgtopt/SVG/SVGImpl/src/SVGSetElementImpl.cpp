@@ -151,9 +151,16 @@ TBool CSvgSetElementImpl::AnimProcL( MSvgTimerEvent* /* aEvent */)
         case KSvgTypeTransform:
             break;
         case KSvgTypeColor:
+            iEndInt = iToInt;
+            iTargetElement->SetAttributeIntL( iAttrId, iToInt );
+            break;
         case KSvgTypeTextAnchor:
         case KSvgTypeInteger:
+            iEndInt = iToInt;
+            iTargetElement->SetAttributeIntL( iAttrId, iToInt );
         case KSvgTypeVisibility:
+            iEndInt = iToInt;
+            iTargetElement->SetAttributeIntL( iAttrId, iToInt );
         case KSvgTypeDisplay:
             iEndInt = iToInt;
             iTargetElement->SetAttributeIntL( iAttrId, iToInt );

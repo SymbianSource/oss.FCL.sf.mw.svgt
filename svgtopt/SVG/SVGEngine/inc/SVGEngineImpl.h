@@ -68,7 +68,6 @@ class   MSvgDataRequester;
 class   CSvgTimer;
 // temporary for debugging
 
-class CSvgtBitmap;
 //This includes the main rendering loop.
 
 /**
@@ -328,8 +327,6 @@ class CSvgEngineImpl : public CBase, public MSVGImageLoadingObserver
          */
         void GenerateMask( CFbsBitmap* aMask );
 
-        void GenerateMask(CSvgtBitmap* aMask);
-        
         /**
          * Set background color
          *
@@ -368,9 +365,6 @@ class CSvgEngineImpl : public CBase, public MSVGImageLoadingObserver
          void SetGdiContextL(CFbsBitmap* aCurrentBitmap, CFbsBitmap* aMask = NULL);
 
          void SetGdiContextL(CFbsBitmap* aCurrentBitmap, CFbsBitmap* aMask,TSize aCurrentBitmapSize,TDisplayMode aRenderDspMode,TDisplayMode aMaskDspMode);
-         
-         void SetGdiContextL(CSvgtBitmap* aCurrentBitmap, CSvgtBitmap* aMask  = NULL);
-
         /**
          * Start the Engine so that the first frame is drawn when the call is finished.
          *
@@ -617,10 +611,6 @@ class CSvgEngineImpl : public CBase, public MSVGImageLoadingObserver
          TBool IsSVGEnginePaused();
 
          void SetBitmapHeader(const TDesC* aHeaderData);
-         
-         void EnableTargetRendering(TBool aTargetRendering );
-         TBool IsTargetRenderingEnabled() const;
-         
     public: // Functions from base classes
         // From CSvgElementImpl
         /**
@@ -926,7 +916,7 @@ class CSvgEngineImpl : public CBase, public MSVGImageLoadingObserver
 
         CFbsBitmap*             iFrameBuffer;
         CFbsBitmap*             iMask;
-        
+
         TSize                   iFrameBufferSize;  //NGA
         TDisplayMode            iRenderDspMode;
         TDisplayMode            iMaskDspMode;
@@ -941,10 +931,6 @@ private:
         TPtrC                   iLinkShow;
         TBool                   iShowDebugInfo;
 
-        //M2G: target bitmap buffer and mask buffer
-        CSvgtBitmap* iTargetBitmapBuffer;
-        CSvgtBitmap* iTargetMaskBuffer;
-        
         TGfxRectangle2D         iClipRect;
         TSvgEngineState     iSvgEngineState;
         TAnimStatus iAnimationState;
@@ -974,7 +960,6 @@ private:
 
         //Stores Font Type information as passed by CSvgEngineInterfaceImpl
         CSvgBitmapFontProvider *iSvgBitmapFontProvider;
-        TBool iIsTargetRenderingEnabled;
     public:
         TBool                       iCustomOption;
 				TBool												iFrameBufferOverridesViewport;

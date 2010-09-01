@@ -1,0 +1,74 @@
+/*
+* Copyright (c) 2003 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  This file contains all the resources for the SVGT Plugin.
+*
+*/
+
+
+//  RESOURCE IDENTIFIER
+NAME    SVGT 
+
+//  INCLUDES
+#include <eikon.rh>
+#include "SvgtPlugin.hrh"
+#include <npSvgtPlugin.loc>
+
+RESOURCE RSS_SIGNATURE { }
+
+RESOURCE TBUF { buf=""; }
+
+RESOURCE EIK_APP_INFO
+{
+}
+
+RESOURCE MNBUT r_svgtplugin_menu_button
+{
+   popout = r_svgtplugin_menu_pane;
+}
+
+RESOURCE MENU_PANE r_svgtplugin_menu_pane
+    {
+    items=
+        {
+        MENU_ITEM { command=ESVGTPluginPause; txt=SVGT_ME_MEN001_PAUSE; },
+        MENU_ITEM { command=ESVGTPluginResume; txt=SVGT_ME_MEN001_RESUME; },
+	  MENU_ITEM { command=ESVGTPluginReset; txt=SVGT_ME_MEN001_RESET; },
+	  MENU_ITEM { command=ESVGTPluginReplay; txt=SVGT_ME_MEN001_REPLAY; },
+        MENU_ITEM { command=ESVGTPluginZoomSubMenu; txt=SVGT_ME_MEN001_ZOOM; cascade=r_svgtplugin_zoom_cascaded_menu; },
+        MENU_ITEM { command=ESVGTPluginRotateSubMenu; txt=SVGT_ME_MEN001_ROTATE; cascade=r_svgtplugin_rotate_cascaded_menu;}
+        };
+    }
+
+RESOURCE MENU_PANE r_svgtplugin_zoom_cascaded_menu
+    {
+    items =
+        {
+        MENU_ITEM { command = ESVGTPluginZoomIn; txt = SVGT_ME_MEN001_ZOOM_IN; },
+        MENU_ITEM { command = ESVGTPluginZoomOut;  txt = SVGT_ME_MEN001_ZOOM_OUT; }
+        };
+    }
+
+RESOURCE MENU_PANE r_svgtplugin_rotate_cascaded_menu
+    {
+    items =
+        {
+        MENU_ITEM { command = ESVGTPluginRotate90;  txt = SVGT_ME_MEN001_ROTATE_90;},
+        MENU_ITEM { command = ESVGTPluginRotate180; txt = SVGT_ME_MEN001_ROTATE_180; },
+        MENU_ITEM { command = ESVGTPluginRotate270;  txt = SVGT_ME_MEN001_ROTATE_270; }
+        };
+    }
+ 
+     
+// End of File
+

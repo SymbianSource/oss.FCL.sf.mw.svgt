@@ -17,7 +17,6 @@
 
 #include "SWOpenVGRendererImpl.h"
 #include "SWVGSurfaceImpl.h"
-#include "swopenvgtargetsurfaceimpl.h"
 
 #include <VG/vgu.h>
 
@@ -78,10 +77,7 @@ void CSWOpenVGRendererImpl::ToggleReset()
     {
     }
 
-MVGSurfaceImpl* CSWOpenVGRendererImpl::CreateVGSurfaceL(TInt aOption)
+MVGSurfaceImpl* CSWOpenVGRendererImpl::CreateVGSurfaceL(TInt /*aOption*/)
     {
-    if(aOption)
-        return CSWVGSurfaceImpl::NewL();
-    else
-        return CSWVGTargetSurfaceImpl::NewL(); //M2G: Enable rendering on target buffer.
+    return CSWVGSurfaceImpl::NewL();
     }

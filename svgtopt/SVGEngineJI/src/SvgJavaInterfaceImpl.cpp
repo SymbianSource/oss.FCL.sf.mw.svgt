@@ -241,34 +241,6 @@ EXPORT_C void CSvgJavaInterfaceImpl::SvgEngineRenderDocument( SvgEngineHandle aE
 	*/
 }
 
-/*
- * M2G: SvgEngineRenderDocument() overloaded to pass the CSvgtBitmap object to SvgEngine
- */
-EXPORT_C void CSvgJavaInterfaceImpl::SvgEngineRenderDocument( 
-    SvgEngineHandle aEngineHandle, SvgDocumentHandle aDocumentHandle, 
-    SvgtBitmapHandle aSurfaceHandle, SvgtBitmapHandle aSurfaceMaskHandle, 
-    TReal32 aCurrentTime ) 
-    {
-    CSvgEngineInterfaceImpl::iFileIsLoaded = ETrue;
-
-    SetDocument( (CSvgEngineImpl*)aEngineHandle, (CSvgDocumentImpl*)aDocumentHandle );
-
-    // GfxContext creation
-    TRAPD(error, SetGdiContextL( (CSvgEngineImpl*)aEngineHandle, (CSvgtBitmap*)aSurfaceHandle ) );
-    if ( error != KErrNone )
-       {
-       // ignore trap error
-       }
-
-    //this udpates things like Viewport with whatever preserveAspectRatio and widths are set
-    //InitializeEngine((CSvgEngineImpl*)aEngineHandle);
-
-    if ( ((CSvgtBitmap*)aSurfaceMaskHandle) != NULL)
-    GenerateMask((CSvgtBitmap*)aSurfaceMaskHandle);
-
-    RenderFrame( (CSvgEngineImpl*)aEngineHandle, (TUint)(aCurrentTime * 1000) );
-    }
-
 /**
  *
  */
@@ -1355,13 +1327,13 @@ EXPORT_C short CSvgJavaInterfaceImpl::SvgElementGetEnumAttribute( SvgElementHand
                 {
                 if(lSvgAttrId == KCSS_ATTR_FONTSIZE)
                     {
-                   // if(lValue != KErrNotFound)
-                    //    {
+                    if(lValue != KErrNotFound)
+                        {
                         // font is internally considered to be a float.
                         TReal32 lValue = GetElementFloatAttribute((CSvgElementImpl*)aElementHandle,lSvgAttrId);
                         return short (lValue) ;
-                    //    }
-                    //return KInvalidEnumAttribute;
+                        }
+                    return KInvalidEnumAttribute;
                     }
                 TInt lResult = GetEnumAttribute((CSvgElementImpl*)aElementHandle, lSvgAttrId , lValue);
                 if(lResult == KErrNotFound)
@@ -2681,43 +2653,37 @@ TInt  CSvgJavaInterfaceImpl::SvgEnumerationtoStringMappingJSRtoSVG(const TInt aA
 */
 TInt CSvgJavaInterfaceImpl::SvgStringtoEnumerationMappingSVGtoJSR(const TInt aAttributeId , TPtrC16 aValue)
 {
-    TInt attribVal = KErrNotFound;
-    
     switch(aAttributeId)
     {
     case KCSS_ATTR_FILLRULE:
             {
             if(aValue == _L("evenodd"))
-                attribVal = FILL_RULE_EVENODD;
-            else if(aValue == _L("nonzero"))
-                attribVal = FILL_RULE_NONZERO;
+            return FILL_RULE_EVENODD;
+            if(aValue == _L("nonzero"))
+            return FILL_RULE_NONZERO;
             }
-            break;
     case KCSS_ATTR_STROKE_LINECAP:
             {
             if(aValue == _L("butt"))
-                attribVal = STROKE_LINECAP_BUTT;
-            else if(aValue == _L("round"))
-                attribVal = STROKE_LINECAP_ROUND;
-            else if(aValue == _L("square"))
-                attribVal = STROKE_LINECAP_SQUARE;
+            return STROKE_LINECAP_BUTT;
+            if(aValue == _L("round"))
+            return STROKE_LINECAP_ROUND;
+            if(aValue == _L("square"))
+            return STROKE_LINECAP_SQUARE;
             }
-            break;
-    case KCSS_ATTR_STROKE_LINEJOIN:
+
+        case KCSS_ATTR_STROKE_LINEJOIN:
+
             {
             if(aValue == _L("miter"))
-                attribVal = STROKE_LINEJOIN_MITER;
-            else if(aValue == _L("round"))
-                attribVal = STROKE_LINEJOIN_ROUND;
-            else if(aValue == _L("bevel"))
-                attribVal = STROKE_LINEJOIN_BEVEL;
+            return STROKE_LINEJOIN_MITER;
+            if(aValue == _L("round"))
+            return STROKE_LINEJOIN_ROUND;
+            if(aValue == _L("bevel"))
+            return STROKE_LINEJOIN_BEVEL;
             }
-            break;
-    default: 
-        attribVal = KErrNotFound;
-    
+        default: return KErrNotFound;
     }
-    return attribVal;
 }
 /**
 * This maps the Enumeration from SVG to JSR.

@@ -32,7 +32,7 @@ SOURCE  SWOpenVGRendererImpl.cpp
 SOURCE  SWVGSurfaceImpl.cpp 
 
 SOURCEPATH ../../OpenVGRenderer/src
-SOURCE ../../SWVG/src/swopenvgtargetsurfaceimpl.cpp OpenVGRenderer.cpp
+SOURCE OpenVGRenderer.cpp
 
 
 //By default, the build tools look for the WINSCW def file in a BWINS directory
