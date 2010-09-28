@@ -1684,7 +1684,7 @@ public:
      * @param data_size External resource data size
 	 * @return TODO
 	 */
-    EXPORT_C TInt SvgDocumentRequestCompleted( SvgDocumentHandle hDocument, const TPtrC16& aUri, const TPtrC8& );
+    IMPORT_C TInt SvgDocumentRequestCompleted( SvgDocumentHandle hDocument, const TPtrC16& aUri, const TPtrC8& );
 
     /**
      * Get an external item indicated in a SVG document.

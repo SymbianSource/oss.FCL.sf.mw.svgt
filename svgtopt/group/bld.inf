@@ -45,7 +45,6 @@ PRJ_EXPORTS
 *   Changes for CP50 Build Improvement
 */
 ../rom/SVGEngine.iby          CORE_MW_LAYER_IBY_EXPORT_PATH(SVGEngine.iby)
-../rom/SvgtPluginEcom.iby     CORE_MW_LAYER_IBY_EXPORT_PATH(SvgtPluginEcom.iby)
  ../rom/nvgdecoder.iby     CORE_MW_LAYER_IBY_EXPORT_PATH(NVGDecoder.iby)
  ../rom/NVGDecoder_SW.iby     CORE_MW_LAYER_IBY_EXPORT_PATH(NVGDecoder_SW.iby)
 ../rom/VGRenderer.iby 				CORE_MW_LAYER_IBY_EXPORT_PATH(VGRenderer.iby)
