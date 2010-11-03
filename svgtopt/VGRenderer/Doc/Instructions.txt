@@ -1,0 +1,15 @@
+VGRenderer is the interface class which interfaces with the underlying 3 renderer classes - TLV , Software and Hardware renderers.
+
+TLV Renderer Class - This class captures the openvg command sequence into a encoded form of TLV(Type-Length-Value)command buffer and fills 
+into an Extended CFbsBitmap. This extended bitmap is returned back to the calling method. It would be redundant to mention that TLV renderer class
+doesnot interface with Openvg or EGL in any form.
+
+Software Renderer class - Traditional software renderer which interfaces with Openvg and renders content using software renderer.Makes use of
+VG and VGI calls for its job.
+
+Harware Renderer Class - Hardware renderer which makes use of hardware openvg APIs in combination with EGL APIs.The context information is created
+and maintained by egl in this case.Please look out for the TRUE return value of any egl function(eglcreate..eglget) as eglGetError might return an
+EGL_SUCCESS even if an egl function returns FALSE.
+
+EGL and Openvg have to be compiled before compiling VGRenderer
+VGRenderer has to be compiled before compiling SVGEngine or AknIcon.

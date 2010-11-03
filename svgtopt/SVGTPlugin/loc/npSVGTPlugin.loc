@@ -1,0 +1,145 @@
+/*
+* Copyright (c) 2003 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+
+
+// r: GSM/CDMA
+// v: 
+// i: LOCALISATION_TARGET = S90
+
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Pause" is used to pause 
+//d: current svg animation
+#define SVGT_ME_MEN001_PAUSE "Pause"
+
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Resume" is used to resume playing of  
+//d: paused svg animation
+#define SVGT_ME_MEN001_RESUME "Resume"
+
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Reset" is used to reset current  
+//d: svg animation
+#define SVGT_ME_MEN001_RESET "Reset"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Replay" is used to play the  
+//d: current svg animation from the start.
+#define SVGT_ME_MEN001_REPLAY "Replay"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Zoom" is used to pop out a 
+//d: cascade menu for "Zoom In" and "Zoom Out" options
+#define SVGT_ME_MEN001_ZOOM "Zoom"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuHdr
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Rotate" is used to pop out a 
+//d: cascade menu for "Rotate by 90°", "Rotate by 180°" and "Rotate by 270°" options
+#define SVGT_ME_MEN001_ROTATE "Rotate"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuCmd
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "In" is used to Zoom In to the 
+//d: current svg content
+#define SVGT_ME_MEN001_ZOOM_IN "In"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuCmd
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "Out" is used to Zoom Out of the 
+//d: current svg content
+#define SVGT_ME_MEN001_ZOOM_OUT "Out"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuCmd
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "90°" is used to display current
+//d: svg content by rotating it by 90 degrees
+#define SVGT_ME_MEN001_ROTATE_90 "90°"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuCmd
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "180°" is used to display current
+//d: svg content by rotating it by 180 degrees
+#define SVGT_ME_MEN001_ROTATE_180 "180°"
+
+//b: n/a
+//e: n/a
+//f: n/a
+//s: SVG-MEN001
+//w: S90MenuCmd
+//d: This is the menu command in the Svg Browser plugin. The Menu appears  
+//d: when the user taps and holds the stylus for predefined time on the 
+//d: svg display area in the browser window. "270°" is used to display current
+//d: svg content by rotating it by 270 degrees
+#define SVGT_ME_MEN001_ROTATE_270 "270°"
